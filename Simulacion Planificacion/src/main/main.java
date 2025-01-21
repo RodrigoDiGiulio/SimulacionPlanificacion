@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package main;
+import main.config;
+import main.process;
+import main.simulation;
 
 /**
  *
@@ -14,7 +17,14 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+//        config config = new config();
+//        config.showInterface();
+//        process process = new process();
+//        process.showInterface();
+        simulation simulation = new simulation();
+        simulation.showInterface();
+//        processList processList = new processList();
+//        processList.showInterface();
     }
     
 }
