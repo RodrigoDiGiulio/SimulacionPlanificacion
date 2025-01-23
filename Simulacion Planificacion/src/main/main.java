@@ -21,7 +21,7 @@ public class main {
 //        config.showInterface();
 //        process process = new process();
 //        process.showInterface();
-        simulation simulation = new simulation();
+        simulation simulation = new simulation(16);
         simulation.showInterface();
 //        processList processList = new processList();
 //        processList.showInterface();
