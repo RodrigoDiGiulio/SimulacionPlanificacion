@@ -1,6 +1,10 @@
 # SimulacionPlanificacion
 Proyecto 1: Simulación de planificación
 
+Integrantes:
+* Rodrigo Di Giulio
+* Andres Perez
+
 ## Planteamiento del Problema 
 
 El objetivo de este proyecto es que los estudiantes desarrollen un simulador que les permita comprender y aplicar conceptos fundamentales de la planificación de procesos en sistemas operativos. A través del desarrollo de este simulador, se espera que los estudiantes analicen y encuentren la configuración óptima del sistema en función de dos factores clave: precio y rendimiento. Esto incluirá la gestión de procesos, el manejo de excepciones y la implementación de diversas políticas de planificación.
