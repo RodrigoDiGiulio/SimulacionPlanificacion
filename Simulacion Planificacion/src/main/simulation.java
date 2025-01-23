@@ -14,6 +14,9 @@ import java.util.HashSet;
  * @author RDG
  */
 public class simulation {
+    //Datos de PCB valores de registros, ID y nombre del proceso
+    // INstruccion en Program Counter
+    // Alternar politicas de planificacion
     JPanel cards;
     JFrame frame;
     CardLayout cardLayout;

@@ -14,6 +14,7 @@ import java.util.HashSet;
  * @author RDG
  */
 public class process {
+    // Cpu Bound, IO Bound
     JPanel cards;
     JFrame frame;
     CardLayout cardLayout;
