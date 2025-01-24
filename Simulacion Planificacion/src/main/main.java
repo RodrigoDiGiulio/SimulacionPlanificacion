@@ -19,10 +19,10 @@ public class main {
     public static void main(String[] args) {
         process process = new process();
         process.showInterface();
-        simulation simulation = new simulation(16);
-        simulation.showInterface();
-        clock clock = new clock();
-        clock.showInterface();
+//        simulation simulation = new simulation(16);
+//        simulation.showInterface();
+//        clock clock = new clock();
+//        clock.showInterface();
     }
     
 }
