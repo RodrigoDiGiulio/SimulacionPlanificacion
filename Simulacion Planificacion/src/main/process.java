@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.io.*;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -32,6 +34,10 @@ public class process {
     JTextArea exceptionSatifaction;
     File file;
     List procesosCargados = new List();
+    String[] listaDisplay;
+    JList JListaDisplay;
+    JButton search;
+    Boolean searchFR;
 
     public process() {
         JPanel page = new JPanel();
@@ -81,9 +87,36 @@ public class process {
         card.add(ioExtra1);
         
         list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
-        list.setAlignmentX(Component.CENTER_ALIGNMENT);
-        list.add(new JLabel("Procesos Cargados")); 
-        list.add(new JList());
+        JLabel label = new JLabel("Procesos Cargados");
+        label.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        list.add(label);
+        JListaDisplay = new JList();
+        JListaDisplay.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        list.add(JListaDisplay); 
+        search = new JButton("Cargar");
+        search.setAlignmentX(Component.CENTER_ALIGNMENT);
+        searchFR = false;
+        
+        searchFile();
+        
+        search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (searchFR == true){
+                    search.setText("Cargar");
+                    searchFile();
+                    searchFR = !searchFR;
+                }else{
+                    if (JListaDisplay.getSelectedValue() != null){
+                        String selectedItem = JListaDisplay.getSelectedValue().toString();
+                        search.setText("Buscar");
+                        loadFile(selectedItem);
+                        searchFR = !searchFR;
+                    }
+                }
+            }
+        });
+        list.add(search);
         
         page.setLayout(new BoxLayout(page, BoxLayout.X_AXIS));
         page.add(card);    
@@ -93,11 +126,12 @@ public class process {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
         
-        loadFile("Prueba.txt");
-        saveFile("Prueba2.txt");
+//        loadFile("Prueba.txt");
+//        saveFile("Prueba2.txt");
     }
 
-    public void loadFile(String fileName){    
+    public void loadFile(String fileName){
+        procesosCargados.empty();
         try {
             file = new File(System.getProperty("user.dir") + "/src/procesos/" + fileName);
             String filePath = System.getProperty("user.dir") + "/src/procesos/" + fileName;
@@ -126,7 +160,14 @@ public class process {
             e.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(process.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        listaDisplay = new String[procesosCargados.isSize()];
+        for (int i = 0; i < procesosCargados.isSize(); i++) {
+            String[] temp = (String[]) procesosCargados.searchPos(i);
+            System.out.println(temp[1]);
+            listaDisplay[i] = temp[1];
+        }
+        JListaDisplay.setListData(listaDisplay);
     }
     
     public void saveFile(String fileName){
@@ -164,7 +205,24 @@ public class process {
     }
     
     public void searchFile(){
+        String directoryPath = System.getProperty("user.dir") + "/src/procesos/";
+        Path directory = Paths.get(directoryPath);
+        List tempList = new List();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) { 
+            for (Path file : stream) {
+                tempList.addEnd(file.getFileName().toString());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(process.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        listaDisplay = new String[tempList.isSize()];
+        for (int i = 0; i < tempList.isSize(); i++) {
+            String temp = (String) tempList.searchPos(i);
+            System.out.println(temp);
+            listaDisplay[i] = temp;
+        }
+        JListaDisplay.setListData(listaDisplay);
     }
     
     public void showInterface() {
