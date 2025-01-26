@@ -30,6 +30,8 @@ public class process {
     CardLayout cardLayout;
     JTextArea name;
     JTextArea instNum;
+    Checkbox cpuBoundCB;
+    Checkbox ioBoundCB;
     JTextArea exceptionGeneration;
     JTextArea exceptionSatifaction;
     File file;
@@ -38,6 +40,7 @@ public class process {
     JList JListaDisplay;
     JButton search;
     Boolean searchFR;
+    String fileNameGB;
 
     public process() {
         JPanel page = new JPanel();
@@ -60,11 +63,13 @@ public class process {
         
         // CPU Bound
         JPanel cpuBound = new JPanel();
-        cpuBound.add(new Checkbox("CPU Bound"));
+        cpuBoundCB = new Checkbox("CPU Bound");
+        cpuBound.add(cpuBoundCB);
         
         // I/O Bound
         JPanel ioBound = new JPanel();
-        ioBound.add(new Checkbox("I/O Bound"));
+        ioBoundCB = new Checkbox("I/O Bound");
+        ioBound.add(ioBoundCB);
         
         // I/O Bound Extra Header
         JPanel ioExtra0 = new JPanel();
@@ -85,6 +90,58 @@ public class process {
         card.add(ioBound);
         card.add(ioExtra0);
         card.add(ioExtra1);
+        JButton add = new JButton("Agregar Proceso");
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cantidad de valores para un proceso
+                String[] newProcess = new String[6];
+                if (procesosCargados.isSize() == 0){
+                    System.out.println("No hay donde agregar el proceso");
+                } else {
+                    if (name != null && !name.getText().equals("Nombre")) {
+                        if (instNum != null && !instNum.getText().equals("Numero de Instrucciones")){
+                            if (ioBoundCB.getState() == true){
+                                if (exceptionGeneration != null && !exceptionGeneration.getText().equals("Generar")){
+                                    if (exceptionSatifaction != null && !exceptionSatifaction.getText().equals("Satisfacer")){
+                                        newProcess[0] = name.getText();
+                                        newProcess[1] = instNum.getText();
+                                        if (cpuBoundCB.getState()){
+                                            newProcess[2] = "true";
+                                        } else {
+                                            newProcess[2] = "false";
+                                        }
+                                        newProcess[3] = "true";
+                                        newProcess[4] = exceptionGeneration.getText();
+                                        newProcess[5] = exceptionSatifaction.getText();
+                                        procesosCargados.addEnd(newProcess);
+                                        saveFile(fileNameGB);
+                                        loadFile(fileNameGB);
+                                    }
+                                }
+                            } else {
+                                newProcess[0] = name.getText();
+                                newProcess[1] = instNum.getText();
+                                if (cpuBoundCB.getState()){
+                                    newProcess[2] = "true";
+                                } else {
+                                    newProcess[2] = "false";
+                                }
+                                newProcess[3] = "false";
+                                newProcess[4] = "null";
+                                newProcess[5] = "null";
+                                procesosCargados.addEnd(newProcess);
+                                saveFile(fileNameGB);
+                                loadFile(fileNameGB);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        add.setAlignmentX(Component.CENTER_ALIGNMENT); 
+        card.add(add);
+        
         
         list.setLayout(new BoxLayout(list, BoxLayout.Y_AXIS));
         JLabel label = new JLabel("Procesos Cargados");
@@ -131,6 +188,7 @@ public class process {
     }
 
     public void loadFile(String fileName){
+        fileNameGB = fileName;
         procesosCargados.empty();
         try {
             file = new File(System.getProperty("user.dir") + "/src/procesos/" + fileName);
@@ -139,7 +197,8 @@ public class process {
 //            long lines = Files.lines(Paths.get(filePath)).count();
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                String[] process = new String[2];
+                // Cantidad de valores para un proceso
+                String[] process = new String[6];
                 String word = "";
                 int pos = 0;
                 for (char letter : line.toCharArray()){
@@ -171,6 +230,7 @@ public class process {
     }
     
     public void saveFile(String fileName){
+        fileNameGB = fileName;
         try {
             file = new File(System.getProperty("user.dir") + "/src/procesos/" + fileName);
             if (file.createNewFile()) {
@@ -205,6 +265,7 @@ public class process {
     }
     
     public void searchFile(){
+        procesosCargados.empty();
         String directoryPath = System.getProperty("user.dir") + "/src/procesos/";
         Path directory = Paths.get(directoryPath);
         List tempList = new List();
