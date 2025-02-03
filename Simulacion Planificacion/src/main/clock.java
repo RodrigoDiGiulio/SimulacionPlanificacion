@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.HashSet;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import main.simulation;
 
 /**
  *
@@ -17,13 +18,13 @@ import javax.swing.event.ChangeListener;
  */
 public class clock {
     JFrame frame;
-    int tiempo;
+    int tiempo = 1;
     JSlider slider;
     JLabel tiempoLabel;
     JButton status;
     Boolean statusFR;
 
-    public clock() {
+    public clock() {       
         JPanel card = new JPanel();
         JPanel time = new JPanel();
         

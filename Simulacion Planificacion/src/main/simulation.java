@@ -25,6 +25,9 @@ public class simulation {
     JTextArea exceptionGeneration;
     JTextArea exceptionSatifaction;
     JList cpus[];
+    JList readyJList;
+    JList blockJList;
+    JList longTermJList;
     String processes[];
     String cpuNames[];
     String readyList[];
@@ -70,31 +73,29 @@ public class simulation {
             cpuSide.add(lines[i]);
         }
         
-        addReadyList("Vacio");
-        addBlockList("Vacio");
-        addLongTermList("Vacio");
-        
-        
         // Agregar todos listos
         readySide.setLayout(new BoxLayout(readySide, BoxLayout.Y_AXIS));
         JLabel listosLabel = new JLabel("Listos");
         listosLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         readySide.add(listosLabel); 
-        readySide.add(new JList(readyList));
+        readyJList = new JList();
+        readySide.add(readyJList);
         
         // Agregar todos los bloqueados
         blockSide.setLayout(new BoxLayout(blockSide, BoxLayout.Y_AXIS));
         JLabel bloqueadosLabel = new JLabel("Bloqueados");
         bloqueadosLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         blockSide.add(bloqueadosLabel); 
-        blockSide.add(new JList(blockList));
+        blockJList = new JList();
+        blockSide.add(blockJList);
         
         // Agregar todos los de largo plazo
         longTermSide.setLayout(new BoxLayout(longTermSide, BoxLayout.Y_AXIS));
         JLabel largoPlazoLabel = new JLabel("Largo Plazo");
         largoPlazoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         longTermSide.add(largoPlazoLabel); 
-        longTermSide.add(new JList(longTermList));
+        longTermJList = new JList();
+        longTermSide.add(longTermJList);
 
         // Agregar todas las partes para la simulacion
         page.add(cpuSide);
@@ -105,6 +106,10 @@ public class simulation {
         frame = new JFrame("Simulacion");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
+        
+        addReadyList("Vacio");
+        addBlockList("Vacio");
+        addLongTermList("Vacio");
     }
 
     public void setProcess(int cpu, String process, int thread){
@@ -114,6 +119,7 @@ public class simulation {
         }
         data[thread] = process;
         cpus[cpu].setListData(data);
+        cpus[cpu].repaint();
     }
     
     public void addReadyList(String process){
@@ -128,6 +134,8 @@ public class simulation {
             data[readyList.length] = process;
             readyList = data;
         }
+        readyJList.setListData(readyList);
+        readyJList.repaint();
     }
     
     public String delReadyList(int processPos){
@@ -149,6 +157,8 @@ public class simulation {
             readyList = new String[1];
             readyList[0] = "Vacio";
         }
+        readyJList.setListData(readyList);
+        readyJList.repaint();
         return result;
     }
     public void addBlockList(String process){
@@ -163,6 +173,8 @@ public class simulation {
             data[blockList.length] = process;
             blockList = data;
         }
+        blockJList.setListData(blockList);
+        blockJList.repaint();
     }
     
     public String delBlockList(int processPos){
@@ -184,9 +196,12 @@ public class simulation {
             blockList = new String[1];
             blockList[0] = "Vacio";
         }
+        blockJList.setListData(blockList);
+        blockJList.repaint();
         return result;
     }
     public void addLongTermList(String process){
+        System.out.println("Me llamaron");
         if (longTermList == null){
             longTermList = new String[1];
             longTermList[0] = process;
@@ -198,6 +213,8 @@ public class simulation {
             data[longTermList.length] = process;
             longTermList = data;
         }
+        longTermJList.setListData(longTermList);
+        longTermJList.repaint();
     }
     
     public String delLongTermList(int processPos){
@@ -219,9 +236,39 @@ public class simulation {
             longTermList = new String[1];
             longTermList[0] = "Vacio";
         }
+        longTermJList.setListData(longTermList);
+        longTermJList.repaint();
         return result;
     }
-
+    
+    public void changeColorProcess(int cpu){
+        if (cpus[cpu] != null){
+            cpus[cpu].setSelectedIndex(1);
+        }
+        cpus[cpu].repaint();
+    }
+    
+    public void changeColorBlockList(int processPos){
+        if (blockJList != null){
+            blockJList.setSelectedIndex(processPos);
+        }
+        blockJList.repaint();
+    }
+    
+    public void changeColorLongTermList(int processPos){
+        if (longTermJList != null){
+            longTermJList.setSelectedIndex(processPos);
+        }
+        longTermJList.repaint();
+    }
+        
+    public void changeColorReadyList(int processPos){
+        if (readyJList != null){
+            readyJList.setSelectedIndex(processPos);
+        }
+        readyJList.repaint();
+    }
+    
     public void showInterface() {
         frame.pack();
         frame.setVisible(true);
