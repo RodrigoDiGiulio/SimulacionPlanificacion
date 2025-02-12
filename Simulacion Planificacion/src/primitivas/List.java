@@ -30,9 +30,29 @@ public class List<T>{
     public boolean isEmpty(){
         return first == null;
     }
-    
+
+    public MyNode<T> getFirst() {
+        return first;
+    }
+
+    public MyNode<T> getLast() {
+        return last;
+    }
+
+    public MyNode<T> getNext() {
+        return next;
+    }
+      
     public int isSize(){
         return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setFirst(MyNode<T> first) {
+        this.first = first;
     }
     
     public void empty(){
@@ -126,14 +146,14 @@ public class List<T>{
     
     public void delStart(){
         if(!this.isEmpty()){
-            if (size == 1) {
+            if (this.getNext() == null) {
+                System.out.println("entre en la zona de muerte");
                 this.empty();
             }
             else{
                 first = first.getNext();
                 first.setPrev(null);
                 
-                size--;
             }
         }
     }
@@ -146,7 +166,6 @@ public class List<T>{
             else{
                 last = last.getPrev();
                 last.setNext(null);
-                size--;
             }
         }
     }
@@ -441,4 +460,68 @@ public class List<T>{
             temp = temp.getNext();
         }
     }
+    
+    
+    //busca un node en el valor del numero indicado
+    public Object search(int numero){
+      MyNode pointer = getFirst(); 
+        int a = 0;
+        while(pointer.getNext() != null && a<numero ){
+            pointer = pointer.getNext();
+            a++;
+        }
+        if(numero == 0){
+            return getFirst().getData();
+        }
+        if (numero == isSize()){
+           return getLast().getData();
+        }else{
+            return pointer.getElement();
+        }  
+    }
+    
+    //metodo para llenar las listas sin aumentar el size
+   public void llenar(T data){     
+       MyNode<T> newData = new MyNode(data);
+//        System.out.println("Data "+ data);
+//        System.out.println("NewData "+ newData);
+        if(this.isEmpty()){
+            newData.setData(data);
+            first = last = newData;
+        }else{
+            newData.setData(data);
+            last.setNext(newData);
+            newData.setPrev(last);
+            last = newData;
+
+        }   
+     } 
+   
+   
+   //metodo para revisar si hay espacio en la lista de cpus para un nuevo proceso
+   public boolean Revisar(int a){
+      MyNode temp = first;
+      int i = 0;
+      while (i < a){
+        if (temp != null){  
+         temp = temp.getNext();
+         i++;
+      }else{
+          return true;
+        }        
+   }
+      return false;
+ }
+     //metodo de delete que funciona correctamente en bucle
+       public void deleteBegin(){
+        if (isEmpty()) {
+            System.out.println("La lista esta vacia");
+        } else {
+            MyNode pointer = getFirst();
+            setFirst(pointer.getNext());
+            pointer.setNext(null);         
+        }
+        
+    }
+   
 }

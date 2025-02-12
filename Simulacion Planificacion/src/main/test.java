@@ -1,6 +1,4 @@
-/*
- * CardLayoutDemo.java is a 1.4 application that requires no other files.
- */
+
 
 import java.awt.*;
 import java.awt.event.*;
