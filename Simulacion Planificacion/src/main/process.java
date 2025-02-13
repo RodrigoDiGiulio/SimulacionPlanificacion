@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import primitivas.List;
+import main.main;
 
 /**
  *
@@ -183,7 +184,7 @@ public class process {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
         
-//        loadFile("Prueba.txt");
+        loadFile("Prueba.txt");
 //        saveFile("Prueba2.txt");
     }
 
@@ -284,6 +285,10 @@ public class process {
             listaDisplay[i] = temp;
         }
         JListaDisplay.setListData(listaDisplay);
+    }
+    
+    public List getProcesosCargados(){
+        return procesosCargados;
     }
     
     public void showInterface() {

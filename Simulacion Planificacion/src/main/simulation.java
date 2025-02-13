@@ -33,7 +33,7 @@ public class simulation {
     String readyList[];
     String blockList[];
     String longTermList[];
-    int threads = 2;
+    int threads = 1;
     
     public simulation(int cpuNumber) {
         JPanel page = new JPanel();
@@ -120,6 +120,13 @@ public class simulation {
         data[thread] = process;
         cpus[cpu].setListData(data);
         cpus[cpu].repaint();
+    }
+    
+    public String getProcess(int cpu, int thread){
+        for (int i = 0; i < (threads + 1); i++) {
+            return cpus[cpu].getModel().getElementAt(thread).toString();
+        }
+        return "Oh oh";
     }
     
     public void addReadyList(String process){
