@@ -9,17 +9,17 @@ Integrantes:
 
 El objetivo de este proyecto es que los estudiantes desarrollen un simulador que les permita comprender y aplicar conceptos fundamentales de la planificación de procesos en sistemas operativos. A través del desarrollo de este simulador, se espera que los estudiantes analicen y encuentren la configuración óptima del sistema en función de dos factores clave: precio y rendimiento. Esto incluirá la gestión de procesos, el manejo de excepciones y la implementación de diversas políticas de planificación.
 
-El simulador deberá permitir la creación de procesos por parte del usuario, quienes definirán características como el nombre del proceso, la cantidad de instrucciones y, CPU bound (Muy consumidor del procesador) y I/O bound (Muy consumidor de E/S). Si un proceso es I/O bound, deberá especificarse cuántos ciclos se necesitan para generar una excepción y cuántos para satisfacerla. Además, el sistema debe incluir opciones de configuración como la duración de un ciclo, y el número de procesadores activos (entre 2 y 3). Estos parámetros podrán ser modificados tanto al inicio como durante la ejecución de la simulación, los cuales deberán de ser guardados en un txt, csv, json (lo que les sea más conveniente) para que sean cargados en la ejecución inicial del proyecto.
+El simulador deberá permitir la creación de procesos por parte del usuario, quienes definirán características como el nombre del proceso, la cantidad de instrucciones y, CPU bound (Muy consumidor del procesador) y I/O bound (Muy consumidor de E/S). Si un proceso es I/O bound, deberá especificarse cuántos ciclos se necesitan para generar una excepción y cuántos para satisfacerla. Además, el sistema debe incluir opciones de configuración como la duración de un ciclo, y el número de procesadores activos (entre 2 y 3). Estos parámetros podrán ser modificados tanto al inicio como durante la ejecución de la simulación, los cuales deberán de ser **guardados en un txt, csv, json** (lo que les sea más conveniente) para que sean cargados en la ejecución inicial del proyecto.
 
-La simulación en sí debe proporcionar una visualización clara de los estados de los procesos, mostrando información esencial como el estado actual de las colas de listos y bloqueados, y los datos de cada PCB (incluyendo valores de registros, ID y nombre del proceso). Así cómo también se debe mostrar el proceso que se está ejecutando en el momento, y la instrucción que está por ejecutarse en el program counter. Además, debe ser posible alternar entre diferentes políticas de planificación, como FCFS, SJF y Round Robin, para el cual se debe estar ejecutando el sistema operativo. 
+La simulación en sí debe proporcionar una visualización clara de los estados de los procesos, mostrando información esencial como el estado actual de las colas de listos y bloqueados, y los **datos de cada PCB (incluyendo valores de registros, ID y nombre del proceso**). Así cómo también se debe mostrar el proceso que se está ejecutando en el momento, y la instrucción que está por ejecutarse en el program counter. Además, debe ser posible alternar entre diferentes políticas de planificación, como FCFS, SJF y Round Robin, para el cual se debe estar ejecutando el sistema operativo. 
 
 Como parte de un módulo adicional para quienes busquen puntos extra, el simulador podrá incluir gráficas que ilustran el rendimiento del sistema a lo largo del tiempo, así como el rendimiento individual de cada CPU. Estas gráficas proporcionarán una representación visual que permita comprender mejor la eficiencia del sistema bajo diferentes configuraciones. Pueden escoger la medida de rendimiento que parezca más conveniente y apropiada. 
-El simulador debe indicar en todo momento si se está ejecutando el sistema operativo o un programa de usuario. Asimismo, debe visualizar de forma clara cómo los procesos entran y salen de las listas de "listos" y "bloqueados".
+El simulador debe indicar en todo momento si se está ejecutando el **sistema operativo o un programa de usuario**. Asimismo, debe visualizar de forma clara cómo los procesos entran y salen de las listas de "listos" y "bloqueados".
 
-Es importante destacar que el simulador debe ser lo suficientemente flexible para permitir la configuración dinámica de ciertos parámetros, como la duración de los ciclos y el número de CPUs activos, durante la ejecución. Además, las configuraciones realizadas deben poder guardarse para ser cargadas en futuras ejecuciones. El sistema operativo del simulador deberá gestionar los cambios de procesos y atender excepciones de manera eficiente.
+Es importante destacar que el simulador debe ser lo suficientemente flexible para permitir la configuración dinámica de ciertos parámetros, como la **duración de los ciclos y el número de CPUs activos, durante la ejecución**. Además, las configuraciones realizadas deben poder guardarse para ser cargadas en futuras ejecuciones. El sistema operativo del simulador deberá gestionar los cambios de procesos y atender excepciones de manera eficiente.
 Es importante recordar que dependiendo del tipo de consumo del procesador de un proceso, este puede verse beneficiado o no por el algoritmo de planificación, por lo que esto debe ser considerado. 
 
-En cuanto a las métricas de rendimiento, se espera que el simulador registre tanto los promedios generales del sistema como los resultados individuales de cada CPU. Esto permitirá a los estudiantes evaluar el impacto de sus decisiones y ajustar las configuraciones para mejorar el rendimiento.
+En cuanto a las métricas de rendimiento, se espera que el **simulador registre tanto los promedios generales del sistema como los resultados individuales de cada CPU**. Esto permitirá a los estudiantes evaluar el impacto de sus decisiones y ajustar las configuraciones para mejorar el rendimiento.
 
 ## Requerimientos funcionales
 * Deben hacer uso de Hilos/Threads para la simulación de los procesos y Semáforos/Semaphores para garantizar exclusión mútua.
@@ -29,11 +29,11 @@ En cuanto a las métricas de rendimiento, se espera que el simulador registre ta
 * Cola de procesos del sistema, tanto de procesos listos cómo de procesos bloqueados. Incluyendo una lista de los procesos culminados
 * Valor del program counter, procesadores activos, y que proceso se está ejecutando en cada procesador.
 * Los siguientes elementos del PCB por proceso (tanto en las colas como en el CPU):
-* ID (generado dinámicamente y único)
-* STATUS: Running, Blocked, Ready
-* Nombre
-* Estado del PC 
-* Estado del MAR
+* **ID (generado dinámicamente y único)**
+* **STATUS: Running, Blocked, Ready**
+* **Nombre**
+* **Estado del PC** 
+* **Estado del MAR**
 * Selector de tipo de algoritmo de planificación, e indicador de cual tipo de planificación se está usando a tiempo real. 
 * Si el sistema operativo se está ejecutando o se encuentra siendo ejecutado un proceso de usuario por CPU. 
 * El número de ciclo de reloj global dentro de la simulación desde que se inicia.
@@ -56,7 +56,7 @@ Con el fin de minimizar la complejidad del proyecto y estandarizar. Se debe asum
 * Por simplicidad, en este proyecto, todos los procesos se ejecutan de manera lineal. Eso quiere decir que el PC y el MAR incrementarán una unidad por cada ciclo del reloj. 
 * La asignación de procesos será de manera dinámica, por lo que habrá una única cola de listos para todos los procesadores.
 * Se debe implementar SMP para el llamado del SO generado por excepciones.
-*El tratamiento de las excepciones debe realizarse con el uso de Threads, y cada “Thread” de excepción debe regresar al procesador en donde fue generado. 	
+* El tratamiento de las excepciones debe realizarse con el uso de Threads, y cada “Thread” de excepción debe regresar al procesador en donde fue generado. 	
 
 ## Consideraciones
 * El proyecto puede ser elaborado máximo por 2 personas (3 si alguno queda  solo) 
