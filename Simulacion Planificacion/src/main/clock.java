@@ -18,7 +18,7 @@ import main.simulation;
  */
 public class clock {
     JFrame frame;
-    int tiempo = 1;
+    int tiempo = 10;
     JSlider slider;
     JLabel tiempoLabel;
     JButton status;
@@ -31,7 +31,7 @@ public class clock {
         slider = new JSlider(1,100); // Tiempo ms * 100
         slider.setSnapToTicks(true);
         slider.setMajorTickSpacing(1);
-        slider.setValue(1);
+        slider.setValue(tiempo);
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

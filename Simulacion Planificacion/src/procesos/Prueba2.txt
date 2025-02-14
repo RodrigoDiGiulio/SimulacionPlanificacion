@@ -1,3 +1,15 @@
-0,Win32,true,true,3,7
-1,Node,false,true,4,8
-2,NetBeans,true,false,null,null
+Nombre, Numero de Instrucciones, CPU Bound, I/O Bound, Generar, Satisfacer
+Blender,13,false,false,null,null,null,null
+FileManager,23,true,true,3,6,null,null
+Spotify,22,true,true,20,2,null,null
+GitHubDesktop,4,true,true,1,5,null,null
+Telegram,4,false,true,3,6,null,null
+NetBeans,7,false,false,null,null,null,null
+Notepad,12,true,false,null,null,null,null
+Notepadpp,63,true,true,3,3,null,null
+Whatsapp,24,false,false,null,null,null,null
+Steam,12,false,false,null,null,null,null
+Chrome,53,true,false,null,null,null,null
+ThunderBird,212,false,true,8,5,null,null
+ChatGPT,24,true,true,23,30,null,null
+Gemini,8,true,true,2,5,null,null

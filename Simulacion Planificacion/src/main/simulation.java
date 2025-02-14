@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -33,7 +34,7 @@ public class simulation {
     String readyList[];
     String blockList[];
     String longTermList[];
-    int threads = 2;
+    int threads = 1;
     
     public simulation(int cpuNumber) {
         JPanel page = new JPanel();
@@ -91,7 +92,7 @@ public class simulation {
         
         // Agregar todos los de largo plazo
         longTermSide.setLayout(new BoxLayout(longTermSide, BoxLayout.Y_AXIS));
-        JLabel largoPlazoLabel = new JLabel("Largo Plazo");
+        JLabel largoPlazoLabel = new JLabel("Terminados");
         largoPlazoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         longTermSide.add(largoPlazoLabel); 
         longTermJList = new JList();
@@ -107,9 +108,9 @@ public class simulation {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
         
-        addReadyList("Vacio");
-        addBlockList("Vacio");
-        addLongTermList("Vacio");
+//        addReadyList("Vacio");
+//        addBlockList("Vacio");
+//        addLongTermList("Vacio");
     }
 
     public void setProcess(int cpu, String process, int thread){
@@ -122,11 +123,24 @@ public class simulation {
         cpus[cpu].repaint();
     }
     
+    public String getProcess(int cpu, int thread){
+        return (String) cpus[cpu].getModel().getElementAt(thread);
+    }
+    
     public void addReadyList(String process){
         if (readyList == null){
             readyList = new String[1];
             readyList[0] = process;
         }else{
+            boolean exists = false;
+            for (int i = 0; i < readyList.length; i++) {
+                if (readyList[i].equals(process)){
+                    exists = true;
+                }
+            }
+            if (exists){
+                return;
+            }
             String[] data = new String[readyList.length + 1];
             for (int i = 0; i < readyList.length; i++) {
                 data[i] = readyList[i];
@@ -144,18 +158,15 @@ public class simulation {
             result = "Empty";
         }else{
             String[] data = new String[readyList.length - 1];
+            int dataPos = 0;
             for (int i = 0; i < readyList.length; i++) {
                 if (i == processPos){
                     result = readyList[i];
                 }else{
-                    data[i] = readyList[i];
+                    data[dataPos++] = readyList[i];
                 }
             }
             readyList = data;
-        }
-        if (readyList.length == 0){
-            readyList = new String[1];
-            readyList[0] = "Vacio";
         }
         readyJList.setListData(readyList);
         readyJList.repaint();
@@ -166,6 +177,15 @@ public class simulation {
             blockList = new String[1];
             blockList[0] = process;
         }else{
+            boolean exists = false;
+            for (int i = 0; i < blockList.length; i++) {
+                if (blockList[i].equals(process)){
+                    exists = true;
+                }
+            }
+            if (exists){
+                return;
+            }
             String[] data = new String[blockList.length + 1];
             for (int i = 0; i < blockList.length; i++) {
                 data[i] = blockList[i];
@@ -183,29 +203,34 @@ public class simulation {
             result = "Empty";
         }else{
             String[] data = new String[blockList.length - 1];
+            int dataPos = 0;
             for (int i = 0; i < blockList.length; i++) {
                 if (i == processPos){
                     result = blockList[i];
                 }else{
-                    data[i] = blockList[i];
+                    data[dataPos++] = blockList[i];
                 }
             }
             blockList = data;
-        }
-        if (blockList.length == 0){
-            blockList = new String[1];
-            blockList[0] = "Vacio";
         }
         blockJList.setListData(blockList);
         blockJList.repaint();
         return result;
     }
     public void addLongTermList(String process){
-        System.out.println("Me llamaron");
         if (longTermList == null){
             longTermList = new String[1];
             longTermList[0] = process;
         }else{
+            boolean exists = false;
+            for (int i = 0; i < longTermList.length; i++) {
+                if (longTermList[i].equals(process)){
+                    exists = true;
+                }
+            }
+            if (exists){
+                return;
+            }
             String[] data = new String[longTermList.length + 1];
             for (int i = 0; i < longTermList.length; i++) {
                 data[i] = longTermList[i];
@@ -223,18 +248,15 @@ public class simulation {
             result = "Empty";
         }else{
             String[] data = new String[longTermList.length - 1];
+            int dataPos = 0;
             for (int i = 0; i < longTermList.length; i++) {
                 if (i == processPos){
                     result = longTermList[i];
                 }else{
-                    data[i] = longTermList[i];
+                    data[dataPos++] = longTermList[i];
                 }
             }
             longTermList = data;
-        }
-        if (longTermList.length == 0){
-            longTermList = new String[1];
-            longTermList[0] = "Vacio";
         }
         longTermJList.setListData(longTermList);
         longTermJList.repaint();

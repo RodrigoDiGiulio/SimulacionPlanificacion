@@ -95,7 +95,7 @@ public class process {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Cantidad de valores para un proceso
-                String[] newProcess = new String[6];
+                String[] newProcess = new String[8];
                 if (procesosCargados.isSize() == 0){
                     System.out.println("No hay donde agregar el proceso");
                 } else {
@@ -114,6 +114,8 @@ public class process {
                                         newProcess[3] = "true";
                                         newProcess[4] = exceptionGeneration.getText();
                                         newProcess[5] = exceptionSatifaction.getText();
+                                        newProcess[6] = "null";
+                                        newProcess[7] = "null";
                                         procesosCargados.addEnd(newProcess);
                                         saveFile(fileNameGB);
                                         loadFile(fileNameGB);
@@ -183,7 +185,7 @@ public class process {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
         
-//        loadFile("Prueba.txt");
+        loadFile("Prueba.txt");
 //        saveFile("Prueba2.txt");
     }
 
@@ -198,7 +200,7 @@ public class process {
             while (myReader.hasNextLine()) {
                 String line = myReader.nextLine();
                 // Cantidad de valores para un proceso
-                String[] process = new String[6];
+                String[] process = new String[8];
                 String word = "";
                 int pos = 0;
                 for (char letter : line.toCharArray()){
@@ -284,6 +286,10 @@ public class process {
             listaDisplay[i] = temp;
         }
         JListaDisplay.setListData(listaDisplay);
+    }
+    
+    public List getProcess() {
+        return procesosCargados;
     }
     
     public void showInterface() {
