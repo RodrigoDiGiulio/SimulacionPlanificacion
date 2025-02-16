@@ -523,5 +523,49 @@ public class List<T>{
         }
         
     }
+       
+          public void deleteFinal(){
+        if (isEmpty()) {
+            System.out.println("La lista esta vacia");
+        } else {
+            MyNode pointer = getFirst();
+            while (pointer.getNext().getNext() != null) {
+                pointer = pointer.getNext();
+            }
+            pointer.setNext(null);
+            size--;
+        }
+    }     
+       
+  public void Borrar_especifico(Object camino){
+         if (isEmpty()) {
+            System.out.println("La lista esta vacia");
+        } else {
+            MyNode pointer = getFirst();
+            boolean encontrado = false;
+            if(camino == getFirst().getElement()){
+                deleteBegin();
+                pointer = getFirst();
+            }
+            if(camino == getLast().getElement()){
+                deleteFinal();
+                pointer = getLast();
+            }
+            while(pointer != null && encontrado == false){
+                if(pointer.getElement() == camino){
+                    MyNode temp = pointer.getPrev();
+                    MyNode temp2 = pointer.getNext();
+                    temp.setNext(temp2);
+                    temp2.setPrev(temp);
+                    pointer.setPrev(null);
+                    pointer.setNext(null);
+                    size--;
+                    encontrado = true;
+                }else{
+                    pointer = pointer.getNext();
+                }
+            }
+        }
+  }   
    
 }

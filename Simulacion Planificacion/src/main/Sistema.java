@@ -20,6 +20,8 @@ public class Sistema {
   int numero_proceso = 0;
   int numero_proceso_cpu = 2;
   int Planifiacion_vigente = 0;
+  boolean no_SPN = true;
+  boolean no_HRRN = true;
   List lista_cpu = new List();
   List lista_ready = new List();
   List lista_bloqueados = new List();
@@ -159,6 +161,229 @@ int p = 1;
    iniciar_nuevo_ciclo();
  }
 
+ 
+ //metodo de planificacion round robin el segundo que nos piden, por las especificaciones
+ //del projecto es igual al FCFS
+ public void Round_Robin() throws InterruptedException{
+  int a = 0;
+  int b = getNumero_proceso_cpu();
+  int n = 0;
+ for (int i=0; i < lista_cpu.isSize(); i++){
+      int h = 0;
+     Object c = lista_cpu.search(i);
+     Cpu d = Cpu.class.cast(c);
+     while (h < b){
+      Object g = lista_ready.search(a);
+      Procesos e = Procesos.class.cast(g);
+      d.getProcesos().llenar(e);
+      h++;
+      a++;
+     }
+    }
+     while (n < numero_proceso_cpu * numero_cpus){
+         //System.out.println("el valor de n es"+n);
+         //lista_ready.print();
+          lista_ready.deleteBegin();
+      n++;
+     }
+   iniciar_nuevo_ciclo();    
+ }
+ 
+ //Tercera politica de planificacion, agarra los de menor tiempo disponibles
+ public void SPN() throws InterruptedException{
+  if(no_SPN){
+   List nueva = new List();
+   int b = 0;
+   int c = numero_proceso*2;
+   int d = lista_ready.isSize();
+   while(b< c-2){            
+     int a =0;
+     Object g = lista_ready.search(0);
+     Procesos e = Procesos.class.cast(g);
+    for (int i = 0; i< d-1; i++){
+      Object h = lista_ready.search(i);
+      Procesos f = Procesos.class.cast(h);
+      if(e.getTiempo()> f.getTiempo()){
+         e = f; 
+         a=i; 
+      }
+      if(e.getTiempo() == f.getTiempo() && e.get_Id() > f.get_Id()){
+          e = f;
+         a=i; 
+      }
+    }
+     Object v = lista_ready.search(a);
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     d--;
+     b++;
+   }
+     Object v = lista_ready.search(0);
+     if(lista_ready.search(1) != null){
+         Object h = lista_ready.search(1);
+         Procesos f = Procesos.class.cast(h);
+         nueva.addEnd(f);
+         lista_ready.deleteBegin();
+     }
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     setLista_ready(nueva);
+  }
+  no_SPN= false;
+  FCFS();
+ }
+ 
+ //Cuarta politica de planificacion agarra los que les queda menor tiempo para
+ //terminarse
+ public void SRT() throws InterruptedException{
+        List nueva = new List();
+   int b = 0;
+   int c = numero_proceso*2;
+   int d = lista_ready.isSize();
+   while(b< c-2){            
+     int a =0;
+     Object g = lista_ready.search(0);
+     Procesos e = Procesos.class.cast(g);
+    for (int i = 0; i< d-1; i++){
+      Object h = lista_ready.search(i);
+      Procesos f = Procesos.class.cast(h);
+      if(e.getTiempo() > f.getTiempo()){
+         e = f; 
+         a=i; 
+      }
+      if(e.getTiempo() == f.getTiempo() && e.get_Id() > f.get_Id()){
+         e = f; 
+         a=i; 
+      }
+    }
+     Object v = lista_ready.search(a);
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     d--;
+     b++;
+   }
+     Object g = lista_ready.search(0);
+     if(lista_ready.search(1) != null){
+         Object h = lista_ready.search(1);
+         Procesos f = Procesos.class.cast(h);
+         nueva.addEnd(f);
+         lista_ready.deleteBegin();
+     }
+     Procesos e = Procesos.class.cast(g);
+     nueva.addEnd(e);
+     lista_ready.Borrar_especifico(g);
+     setLista_ready(nueva);
+     for (int i=0; i < lista_ready.isSize(); i++){
+         Object z = lista_ready.search(i);
+         Procesos v = Procesos.class.cast(z);
+         if(v.getTiempo() > 5){
+            int p = v.getTiempo();
+            v.setTiempo(p-5); 
+         }
+     }
+       FCFS();
+ }
+ 
+ //quinta politica de planifcacion agarra los que tenga el mas
+ //alto ratio de respuesta
+ public void HRRN()throws InterruptedException{
+   if(no_HRRN){
+   List nueva = new List();
+   int b = 0;
+   int c = numero_proceso*2;
+   int d = lista_ready.isSize();
+   int z=ciclos*5;
+   while(b< c-2){            
+     int a =0;
+      Object g = lista_ready.search(0);
+      Procesos e = Procesos.class.cast(g);
+      int q = z +e.getTiempo();
+      int t1 = q/e.getTiempo();
+    for (int i = 0; i< d-1; i++){
+      Object h = lista_ready.search(i);
+      Procesos f = Procesos.class.cast(h);
+      int w = z + f.getTiempo();
+      int t2 = w/f.getTiempo();
+      if(t1 < t2){
+         e = f; 
+         a=i; 
+      }
+      if(t1 == t2 && e.get_Id() > f.get_Id()){
+         e = f; 
+         a=i; 
+      }
+    }
+     Object v = lista_ready.search(a);
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     d--;
+     b++;
+     z = z+5;
+   }
+     Object g = lista_ready.search(0);
+     if(lista_ready.search(1) != null){
+         Object h = lista_ready.search(1);
+         Procesos f = Procesos.class.cast(h);
+         nueva.addEnd(f);
+         lista_ready.deleteBegin();
+     }
+     Procesos e = Procesos.class.cast(g);
+     nueva.addEnd(e);
+     lista_ready.Borrar_especifico(g);
+     setLista_ready(nueva);
+  }
+  no_HRRN= false;
+  FCFS();
+
+ }
+ 
+ 
+ //Sexta politica de planificacion, esta es por prioridades
+ public void Feedback() throws InterruptedException{
+  List nueva = new List();
+   int b = 0;
+   int c = numero_proceso*2;
+   int d = lista_ready.isSize();
+   while(b< c-2){            
+     int a =0;
+     Object g = lista_ready.search(0);
+     Procesos e = Procesos.class.cast(g);
+    for (int i = 0; i< d-1; i++){
+      Object h = lista_ready.search(i);
+      Procesos f = Procesos.class.cast(h);
+      if(e.getPrioridad()> f.getPrioridad()){
+         e = f; 
+         a=i; 
+      }
+      if(e.getPrioridad()== f.getPrioridad()&& e.get_Id() > f.get_Id()){
+          e = f;
+         a=i; 
+      }
+    }
+     Object v = lista_ready.search(a);
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     d--;
+     b++;
+   }
+     Object v = lista_ready.search(0);
+     if(lista_ready.search(1) != null){
+         Object h = lista_ready.search(1);
+         Procesos f = Procesos.class.cast(h);
+         nueva.addEnd(f);
+         lista_ready.deleteBegin();
+     }
+     Procesos n = Procesos.class.cast(v);
+     nueva.addEnd(n);
+     lista_ready.Borrar_especifico(v);
+     setLista_ready(nueva);
+     FCFS();   
+ }
  
  //metodo que comienza un nuevo ciclo
  public void iniciar_nuevo_ciclo() throws InterruptedException{

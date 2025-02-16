@@ -10,12 +10,14 @@ package primitivas;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 
 public class Procesos extends Thread{
 int Id;
 int make_exception = -1;
 int satisface = -1;
-int num = 0;
+int tiempo = (int)Math.floor(Math.random()*50+1);;
+int prioridad = (int)Math.floor(Math.random()*20+1);
 boolean ready = true;
 boolean bloqueado = false;
 boolean largo_plazo = false;
@@ -105,7 +107,22 @@ public void change_largo_plazo (boolean id){
      largo_plazo = id;
 }
 
+    public int getTiempo() {
+        return tiempo;
+    }
 
+    public void setTiempo(int tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }   
+ 
 //metodo para validar que el nombre no es vacio
 public boolean  Validar_Nombre  (String nombre){
     if (nombre == null){
@@ -141,7 +158,7 @@ public void cambiar_satisface(int numero){
             while(i < 2){
                 
                 try {
-                    System.out.println(Nombre);
+                    System.out.println(prioridad);
                     i++;
                     sleep(1000);
                     
@@ -154,6 +171,4 @@ public void cambiar_satisface(int numero){
         
 
         
-        }             
-
-
+        } 
