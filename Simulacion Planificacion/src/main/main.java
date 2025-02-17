@@ -93,7 +93,7 @@ public class main {
                 System.out.println(proceso[7]);
     //            System.out.println(Arrays.toString(proceso));
                 toDoList.delStart();
-                if (procesoNext == null){
+                if (procesoNext == null){ 
                     simulation.addLongTermList(proceso[0]);
                     simulation.changeColorLongTermList(simulation.longTermList.length-1);
                     simulation.setProcess(0, "System", 1);
