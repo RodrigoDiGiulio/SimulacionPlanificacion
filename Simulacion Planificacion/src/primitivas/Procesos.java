@@ -24,8 +24,8 @@ boolean largo_plazo = false;
 String Nombre;
 String Estado_Pc = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
 String Estado_Mar = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
-Boolean Entrada_Salida;
-Boolean Cpu_bound;
+Boolean Entrada_Salida = false;
+Boolean Cpu_bound = false;
 
 public int get_Id (){
     return Id;
@@ -150,17 +150,25 @@ public void cambiar_satisface(int numero){
     }
 }
 
+public boolean comprobar_excepcion(int a){
+   if(this.Entrada_Salida){
+     if(a == make_exception){
+         return true;
+     }
+     return false;
+   }
+   return false;
+}
 
 //metodo para activar los threads y hagan algo falta saber como pararlos en mitad de ejecucion
  @Override
         public void run(){
-            int i = 0;
-            while(i < 2){
+            while(true){
                 
                 try {
                     System.out.println(prioridad);
-                    i++;
                     sleep(1000);
+                    break;
                     
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Procesos.class.getName());
@@ -171,4 +179,4 @@ public void cambiar_satisface(int numero){
         
 
         
-        } 
+        }             

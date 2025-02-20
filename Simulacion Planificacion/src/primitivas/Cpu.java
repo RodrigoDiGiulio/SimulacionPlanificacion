@@ -39,7 +39,7 @@ List procesos = new List();
       while (f < a){
       Object g = getProcesos().search(f);
       Procesos e = Procesos.class.cast(g);
-      e.start();
+      //e.start();
           //System.out.println("este es el id:"+id +"este es el valor de f:"+ f);
       f++;
    }

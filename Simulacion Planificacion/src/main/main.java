@@ -26,8 +26,8 @@ public class main {
         //proceso.start();
         //proceso.interrupt();
 
-//        Sistema proceso = new Sistema();
-//        proceso.iniciar();
+        //Sistema proceso = new Sistema();
+        //proceso.iniciar();
     }
 }
  

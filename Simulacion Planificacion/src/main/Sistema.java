@@ -117,7 +117,11 @@ int p = 1;
  setLista_ready(lista_ready);
     //System.out.println("primera lista de ready");
     //lista_ready.print();
- FCFS();
+ //FCFS();
+ //SPN();
+ //SRT();
+ //HRRN();
+ Feedback();
  //lista_cpu.print();
   }
 
@@ -127,31 +131,18 @@ int p = 1;
   int a = 0;
   int b = getNumero_proceso_cpu();
   int n = 0;
-     //System.out.println("verificacion de data");
-     //lista_ready.print();
-     //System.out.println("el tamano de la lista es"+ lista_cpu.isSize());
  for (int i=0; i < lista_cpu.isSize(); i++){
       int h = 0;
-     //System.out.println("el valor de i es "+i);
      Object c = lista_cpu.search(i);
      Cpu d = Cpu.class.cast(c);
      while (h < b){
       Object g = lista_ready.search(a);
       Procesos e = Procesos.class.cast(g);
-      //System.out.println(e.get_Nombre());
       d.getProcesos().llenar(e);
       h++;
       a++;
      }
     }
-     //System.out.println("cabeza");
-     //Object prueba = lista_ready.getFirst().getElement();
-     //Procesos prueba1 =Procesos.class.cast(prueba);
-     //System.out.println(prueba1.get_Nombre());
-     //System.out.println("siguiente");
-     //Object prueba2 = lista_ready.getFirst().getNext().getElement();
-     //Procesos prueba3 =Procesos.class.cast(prueba2);
-     //System.out.println(prueba3);
      while (n < numero_proceso_cpu * numero_cpus){
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
@@ -161,7 +152,6 @@ int p = 1;
    iniciar_nuevo_ciclo();
  }
 
- 
  //metodo de planificacion round robin el segundo que nos piden, por las especificaciones
  //del projecto es igual al FCFS
  public void Round_Robin() throws InterruptedException{
@@ -395,6 +385,8 @@ int p = 1;
       //System.out.println("cpu"+0);
       //d.getProcesos().print();
       d.arrancar(numero_proceso_cpu);
+           System.out.println("lista de los threads que estan en la cpu "+i);
+      d.getProcesos().print();
       Excepcion();
      }
   ciclos++;
@@ -426,29 +418,27 @@ int p = 1;
        a++;  
      }
      if(a == Planifiacion_vigente){
-         System.out.println("la planificacion 2 es Round Robin");
+         Round_Robin();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
-       System.out.println("la planificacion 3 es SPN");
+       SPN();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
-        System.out.println("la planificacion 4 es SRT");
+        SRT();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
-       System.out.println("la planificacion 5 es Round HRRN");
+       HRRN();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
-        System.out.println("la planificacion 6 es Feedback");
-     }else{
-       a++;  
+        Feedback();
      }
  }
  
@@ -465,7 +455,11 @@ int p = 1;
      while (a < numero_proceso_cpu){
       Object g = d.getProcesos().search(a);
       Procesos e = Procesos.class.cast(g);
+      if(e.comprobar_excepcion(ciclos)){
+          lista_bloqueados.addEnd(e);
+      }else{
       lista_ready.addEnd(e);
+      }
       a++;
      }
      //System.out.println("antes");
@@ -478,9 +472,24 @@ int p = 1;
     }
      //System.out.println("despues");
      //lista_ready.print();
-   Verificar_Politica_Planificacion(); 
+   chequear_bloqueados(); 
  } 
  
+ //metodo que verifica cuales procesos pueden salir de la lista de bloqueados
+ public void chequear_bloqueados() throws InterruptedException{
+     System.out.println("lista de bloqueados");
+     lista_bloqueados.print();
+     if(lista_bloqueados.getFirst() != null){
+     for (int i=0; i < lista_bloqueados.isSize(); i++){
+     Object c = lista_bloqueados.search(i);
+     Procesos d = Procesos.class.cast(c);
+     if(d.get_satisface() == ciclos){
+         lista_ready.addEnd(d);
+         }
+       }   
+     }
+     Verificar_Politica_Planificacion(); 
+ }
  
  //excepcion que se usa para ordenar los procesos cuando se inician
  public void Excepcion() throws InterruptedException {
