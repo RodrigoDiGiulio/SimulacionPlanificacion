@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 import primitivas.List;
 import main.main;
+import primitivas.Procesos;
 
 /**
  *
@@ -37,6 +38,7 @@ public class process {
     JTextArea exceptionSatifaction;
     File file;
     List procesosCargados = new List();
+    List procesosCargadosProcesos;
     String[] listaDisplay;
     JList JListaDisplay;
     JButton search;
@@ -44,6 +46,7 @@ public class process {
     String fileNameGB;
 
     public process() {
+        procesosCargadosProcesos = new List();
         JPanel page = new JPanel();
         JPanel card = new JPanel();
         JPanel list = new JPanel();
@@ -184,13 +187,14 @@ public class process {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(page);
         
-        loadFile("Prueba.txt");
+        loadFile("Prueba2.txt");
 //        saveFile("Prueba2.txt");
     }
 
     public void loadFile(String fileName){
         fileNameGB = fileName;
         procesosCargados.empty();
+        procesosCargadosProcesos.empty();
         try {
             file = new File(System.getProperty("user.dir") + "/src/procesos/" + fileName);
             String filePath = System.getProperty("user.dir") + "/src/procesos/" + fileName;
@@ -200,6 +204,7 @@ public class process {
                 String line = myReader.nextLine();
                 // Cantidad de valores para un proceso
                 String[] process = new String[6];
+                Procesos tempPro = new Procesos();
                 String word = "";
                 int pos = 0;
                 for (char letter : line.toCharArray()){
@@ -213,6 +218,13 @@ public class process {
                 }
                 process[pos] = word;
                 procesosCargados.addEnd(process);
+                tempPro.change_Nombre(process[1]);
+                tempPro.setTiempo(Integer.parseInt(process[0]));
+                tempPro.change_Cpu_bound(Boolean.parseBoolean(process[2]));
+                tempPro.change_Entrada_Salida(Boolean.parseBoolean(process[3]));
+                tempPro.cambiar_make_exception(Integer.parseInt(process[4]));
+                tempPro.cambiar_satisface(Integer.parseInt(process[5]));
+                procesosCargadosProcesos.addEnd(tempPro);
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -228,6 +240,10 @@ public class process {
             listaDisplay[i] = temp[1];
         }
         JListaDisplay.setListData(listaDisplay);
+    }
+    
+    public List getPro(){
+        return procesosCargadosProcesos;
     }
     
     public void saveFile(String fileName){

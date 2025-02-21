@@ -74,6 +74,17 @@ public class Sistema {
         sim.blockList = temp;
         sim.updateBlock();
     }
+    
+    public void setLongTermList(List lista_largo_plazo) {
+        this.lista_largo_plazo = lista_largo_plazo;
+        String[] temp = new String[lista_largo_plazo.isSize()];
+        for (int i = 0; i < lista_largo_plazo.isSize(); i++) {
+            Procesos tempP = (Procesos) lista_largo_plazo.searchPos(i);
+            temp[i] = tempP.get_Nombre();
+        }
+        sim.longTermList = temp;
+        sim.updateLong();
+    }
   
     
  //metodo que crea un proceso entrada/salida con todos los datos requeridos   
@@ -123,7 +134,7 @@ public void crear_cpus(int id){
 //metodo que arranca el sistema operativo
 public void iniciar() throws InterruptedException{
  setNumero_cpus(4);
- setNumero_proceso(15);
+// setNumero_proceso(15);
  sim = new simulation(numero_cpus);
  sim.showInterface();
  clock = new clock();
@@ -136,19 +147,30 @@ int p = 1;
  //System.out.println("el valor del primer i es"+i);
  crear_cpus(i);
   }
- for (int i = 0; i< numero_proceso; i++){
+// for (int i = 0; i< numero_proceso; i++){
  //System.out.println("el valor del segundo i es"+i);
- int k = 2;
- crear_proceso_Cpu("proceso"+ l);
- crear_proceso_IO("proceso" +p, k, k++);
- l = l+2;
- p = p+2;
- k++;
- }
+// int k = 2;
+// crear_proceso_Cpu("proceso"+ l);
+// crear_proceso_IO("proceso" +p, k, k++);
+// l = l+2;
+// p = p+2;
+// k++;
+// }
+    for (int i = 0; i < fman.getPro().isSize(); i++) {
+        Procesos temPro = new Procesos();
+        temPro = (Procesos) fman.getPro().searchPos(i);
+        if (temPro.get_Cpu_bound()){
+            crear_proceso_Cpu(temPro.get_Nombre());
+        } else if (temPro.get_Entrada_Salida()){
+            crear_proceso_IO(temPro.get_Nombre(),temPro.get_make_exception(),temPro.get_satisface());
+        } else {
+            
+        }
+    }
  setLista_ready(lista_ready);
     //System.out.println("primera lista de ready");
     //lista_ready.print();
-    Verificar_Politica_Planificacion();
+//    Verificar_Politica_Planificacion();
  //FCFS();
  //SPN();
  //SRT();
@@ -427,8 +449,25 @@ int p = 1;
      boolean leave = false;
      while (!leave){ 
          TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
+        switch (clock.plan) {
+            case 0:
+                System.out.println("No hay Round Robin");
+                //pero creo que FCFS es round robin
+            case 1:
+                SPN();
+            case 2:
+                SRT();
+            case 3:
+                HRRN();
+            case 4:
+                Feedback();
+            case 5:
+                FCFS();
+            }
         if (clock.statusFR){
             setLista_ready(lista_ready);
+            setLista_bloqueados(lista_bloqueados);
+            setLongTermList(lista_largo_plazo);
                 System.out.println("ciclo "+ciclos);
                   for (int i=0; i < lista_cpu.isSize(); i++){
                  //System.out.println("valode de i:"+i);

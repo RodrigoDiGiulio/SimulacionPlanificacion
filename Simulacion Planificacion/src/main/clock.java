@@ -19,6 +19,8 @@ import main.simulation;
 public class clock {
     JFrame frame;
     int tiempo = 1;
+    int plan = 0;
+    JButton planificador;
     JSlider slider;
     JLabel tiempoLabel;
     JButton status;
@@ -63,6 +65,38 @@ public class clock {
             }
         });
         
+        planificador = new JButton("FCFS");
+        planificador.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                plan++;
+                if(plan >5){
+                    plan = 0;
+                }
+                switch (plan) {
+                    case 0:
+                        planificador.setText("RR");
+                        break;
+                    case 1:
+                        planificador.setText("SPN");
+                        break;
+                    case 2:
+                        planificador.setText("SRT");
+                        break;
+                    case 3:
+                        planificador.setText("HRRN");
+                        break;
+                    case 4:
+                        planificador.setText("FB");
+                        break;
+                    case 5:
+                        planificador.setText("FCFS");
+                        break;
+                }
+            }
+        });
+        
+        card.add(planificador);
         card.add(status);
         card.add(time);
 

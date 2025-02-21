@@ -23,8 +23,8 @@ boolean ready = true;
 boolean bloqueado = false;
 boolean largo_plazo = false;
 String Nombre;
-String Estado_Pc = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
-String Estado_Mar = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
+int Estado_Pc = (int) Math.floor(Math.random()*50+10);
+int Estado_Mar = (int) Math.floor(Math.random()*50+10);
 Boolean Entrada_Salida = false;
 Boolean Cpu_bound = false;
 
@@ -44,11 +44,11 @@ public String get_Nombre (){
     return Nombre;
 }
 
-public String get_Estado_Pc (){
+public int get_Estado_Pc (){
     return Estado_Pc;
 }
 
-public String get_Estado_Mar (){
+public int get_Estado_Mar (){
     return Estado_Mar;
 }
 
@@ -80,11 +80,11 @@ public void change_Nombre (String nombre){
      Nombre = nombre;
 }
 
-public void chnage_Estado_Pc (String id){
+public void chnage_Estado_Pc (int id){
      Estado_Pc = id;
 }
 
-public void change_Estado_Mar (String id){
+public void change_Estado_Mar (int id){
      Estado_Mar = id;
 }
 
