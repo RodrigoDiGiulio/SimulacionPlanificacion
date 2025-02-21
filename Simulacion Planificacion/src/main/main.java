@@ -15,6 +15,7 @@ import main.process;
 import main.simulation;
 import main.clock;
 import primitivas.List;
+import main.Sistema;
 
 
 public class main {
@@ -26,13 +27,10 @@ public class main {
         proceso.start();
         proceso.interrupt();
 
-<<<<<<< HEAD
-        Sistema proceso = new Sistema();
-        proceso.iniciar();
-=======
+        Sistema pro = new Sistema();
+        pro.iniciar();
         Sistema lol = new Sistema();
         lol.iniciar();
->>>>>>> 21347b33db166dc91209f731dc35375cd4f08530
     }
 }
  

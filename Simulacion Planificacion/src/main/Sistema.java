@@ -423,6 +423,7 @@ int p = 1;
      boolean leave = false;
      while (!leave){ 
         if (clock.statusFR){
+            setLista_ready(lista_ready);
                 System.out.println("ciclo "+ciclos);
                   for (int i=0; i < lista_cpu.isSize(); i++){
                  //System.out.println("valode de i:"+i);
@@ -432,21 +433,12 @@ int p = 1;
                  //d.getProcesos().print();
                  d.arrancar(numero_proceso_cpu);
                       System.out.println("lista de los threads que estan en la cpu "+i);
+                        String temp = sim.getProcess(i, 1);
+                        sim.setProcess(i, temp, 1);
                  d.getProcesos().print();
                  Excepcion();
                 }
              ciclos++;
-             for (int i=0; i < numero_cpus; i++){
-                int a =0;
-                int b = 0;
-                Object c = lista_cpu.search(i);
-                Cpu d = Cpu.class.cast(c);
-                while (a < numero_proceso_cpu){
-                 Object g = d.getProcesos().search(a);
-                 Procesos e = Procesos.class.cast(g);
-                    String temp = sim.getProcess(i, 1);
-                    sim.setProcess(i, temp, 1);
-                }}
             Para_ciclo_actual();
             leave = true;
         }
