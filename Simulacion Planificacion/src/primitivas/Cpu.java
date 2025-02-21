@@ -8,7 +8,7 @@
 package primitivas;
 
 public class Cpu {
-int numero_procesos = 2;
+int numero_procesos = 1;
 int id;
 List procesos = new List();
 
