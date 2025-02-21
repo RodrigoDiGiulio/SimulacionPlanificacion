@@ -537,6 +537,8 @@ int p = 1;
       lista_ready.addEnd(e);
       //setLista_ready(lista_ready);
       }
+      }else{
+         lista_largo_plazo.addEnd(e);
       }
       a++;
      }
