@@ -463,7 +463,7 @@ int p = 1;
      //System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
-         //TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
+         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
          System.out.println("esto es prueba "+ clock.plan);
         switch (clock.plan) {
             case 0:
