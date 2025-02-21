@@ -469,12 +469,12 @@ public class List<T>{
     public Object search(int numero){
       MyNode pointer = getFirst(); 
         int a = 0;
+                if(numero == 0){
+            return getFirst().getData();
+        }
         while(pointer.getNext() != null && a<numero ){
             pointer = pointer.getNext();
             a++;
-        }
-        if(numero == 0){
-            return getFirst().getData();
         }
         if (numero == isSize()){
            return getLast().getData();
@@ -544,6 +544,7 @@ public class List<T>{
          if (isEmpty()) {
             System.out.println("La lista esta vacia");
         } else {
+                      size--;
             MyNode pointer = getFirst();
             boolean encontrado = false;
             if(camino == getFirst().getElement()){
@@ -558,8 +559,12 @@ public class List<T>{
                 if(pointer.getElement() == camino){
                     MyNode temp = pointer.getPrev();
                     MyNode temp2 = pointer.getNext();
+                    if(temp2 == null){
+                        deleteFinal();
+                    }else{
                     temp.setNext(temp2);
-                    temp2.setPrev(temp);
+                    temp2.setPrev(temp); 
+                    }
                     pointer.setPrev(null);
                     pointer.setNext(null);
                     size--;

@@ -25,6 +25,8 @@ public class Sistema {
   int Planifiacion_vigente = 0;
   boolean no_SPN = true;
   boolean no_HRRN = true;
+  boolean no_SRT = true;
+  boolean no_Feedback = true;
   List lista_cpu = new List();
   List lista_ready = new List();
   List lista_bloqueados = new List();
@@ -53,6 +55,32 @@ public class Sistema {
         return lista_ready;
     }
 
+    public void setPlanifiacion_vigente(int Planifiacion_vigente) {
+        this.Planifiacion_vigente = Planifiacion_vigente;
+    }
+ 
+    public void setLista_ready2(List lista_ready) {
+        this.lista_ready = lista_ready;
+    } 
+
+    public void setNo_SRT(boolean no_SRT) {
+        this.no_SRT = no_SRT;
+    }
+
+    public void setNo_Feedback(boolean no_Feedback) {
+        this.no_Feedback = no_Feedback;
+    }
+
+    public void setNo_SPN(boolean no_SPN) {
+        this.no_SPN = no_SPN;
+    }
+
+    public void setNo_HRRN(boolean no_HRRN) {
+        this.no_HRRN = no_HRRN;
+    }
+    
+    
+    
     public void setLista_ready(List lista_ready) {
         this.lista_ready = lista_ready;
         String[] temp = new String[lista_ready.isSize()];
@@ -74,9 +102,10 @@ public class Sistema {
         sim.blockList = temp;
         sim.updateBlock();
     }
+  
     
-    public void setLongTermList(List lista_largo_plazo) {
-        this.lista_largo_plazo = lista_largo_plazo;
+      public void setLista_largo_plazo(List lista_largo_plazos) {
+        this.lista_largo_plazo = lista_largo_plazos;
         String[] temp = new String[lista_largo_plazo.isSize()];
         for (int i = 0; i < lista_largo_plazo.isSize(); i++) {
             Procesos tempP = (Procesos) lista_largo_plazo.searchPos(i);
@@ -84,8 +113,7 @@ public class Sistema {
         }
         sim.longTermList = temp;
         sim.updateLong();
-    }
-  
+    }  
     
  //metodo que crea un proceso entrada/salida con todos los datos requeridos   
   public void crear_proceso_IO(String nombre, int excepcion, int satisface){
@@ -115,6 +143,7 @@ public class Sistema {
  proceso.change_Cpu_bound(true);
  if(proceso.Validar_Nombre(nombre)){
      lista_ready.addEnd(proceso); 
+     setLista_ready(lista_ready);
      }else{
           System.out.println("error: falta un nombre"); 
       }
@@ -133,7 +162,7 @@ public void crear_cpus(int id){
 //metodo que arranca el sistema operativo
 public void iniciar() throws InterruptedException{
  setNumero_cpus(4);
-// setNumero_proceso(15);
+ setNumero_proceso(15);
  sim = new simulation(numero_cpus);
  sim.showInterface();
  clock = new clock();
@@ -146,52 +175,26 @@ int p = 1;
  //System.out.println("el valor del primer i es"+i);
  crear_cpus(i);
   }
-// for (int i = 0; i< numero_proceso; i++){
+ for (int i = 0; i< numero_proceso; i++){
  //System.out.println("el valor del segundo i es"+i);
-// int k = 2;
-// crear_proceso_Cpu("proceso"+ l);
-// crear_proceso_IO("proceso" +p, k, k++);
-// l = l+2;
-// p = p+2;
-// k++;
-// }
-    for (int i = 0; i < fman.getPro().isSize(); i++) {
-        Procesos temPro = new Procesos();
-        temPro = (Procesos) fman.getPro().searchPos(i);
-        if (temPro.get_Cpu_bound()){
-            crear_proceso_Cpu(temPro.get_Nombre());
-        } else if (temPro.get_Entrada_Salida()){
-            crear_proceso_IO(temPro.get_Nombre(),temPro.get_make_exception(),temPro.get_satisface());
-        } else {
-            
-        }
-    }
+ int k = (int)Math.floor(Math.random()*10+5);
+ int j = (int)Math.floor(Math.random()*10+6);
+ crear_proceso_Cpu("proceso"+ l);
+ crear_proceso_IO("proceso" +p, k, j);
+ l = l+2;
+ p = p+2;
+ }
  setLista_ready(lista_ready);
+ setLista_largo_plazo(lista_largo_plazo);
     //System.out.println("primera lista de ready");
     //lista_ready.print();
-//    Verificar_Politica_Planificacion();
+    Verificar_Politica_Planificacion();
  //FCFS();
  //SPN();
  //SRT();
  //HRRN();
  //Feedback();
  //lista_cpu.print();
-        switch (clock.plan) {
-            case 0:
-                System.out.println("No hay Round Robin");
-                FCFS();
-                //pero creo que FCFS es round robin
-            case 1:
-                SPN();
-            case 2:
-                SRT();
-            case 3:
-                HRRN();
-            case 4:
-                Feedback();
-            case 5:
-                FCFS();
-            }
   }
 
 
@@ -216,10 +219,10 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
          lista_ready.deleteBegin();
-     //setLista_ready(lista_ready);
+     setLista_ready(lista_ready);
       n++;
      }
-    Para_ciclo_actual();
+   iniciar_nuevo_ciclo();
  }
 
  //metodo de planificacion round robin el segundo que nos piden, por las especificaciones
@@ -244,7 +247,7 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
           lista_ready.deleteBegin();
-          //setLista_ready(lista_ready);
+          setLista_ready(lista_ready);
       n++;
      }
    iniciar_nuevo_ciclo();    
@@ -257,9 +260,10 @@ int p = 1;
    int b = 0;
    int c = numero_proceso*2;
    int d = lista_ready.isSize();
+      System.out.println( "prueba:"+getLista_ready().getFirst().getElement());
    while(b< c-2){            
      int a =0;
-     Object g = lista_ready.search(0);
+     Object g = getLista_ready().getFirst().getElement();
      Procesos e = Procesos.class.cast(g);
     for (int i = 0; i< d-1; i++){
       Object h = lista_ready.search(i);
@@ -277,7 +281,7 @@ int p = 1;
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
+     //setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -287,21 +291,30 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
-         setLista_ready(lista_ready);
+         //setLista_ready(lista_ready);
      }
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
-     lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
+     if(lista_ready.getFirst().getNext()== null){
+             lista_ready.deleteBegin();
+         }else{
+              if(lista_ready.getLast().getPrev()== null){
+                  lista_ready.deleteFinal();
+              }else{
+                          lista_ready.Borrar_especifico(v);    
+              }
+         }
+     //setLista_ready(lista_ready);
      setLista_ready(nueva);
   }
-  no_SPN= false;
+setNo_SPN(false);
   FCFS();
  }
  
  //Cuarta politica de planificacion agarra los que les queda menor tiempo para
  //terminarse
  public void SRT() throws InterruptedException{
+    if(no_SRT){
         List nueva = new List();
    int b = 0;
    int c = numero_proceso*2;
@@ -325,8 +338,9 @@ int p = 1;
      Object v = lista_ready.search(a);
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
-     lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
+     lista_ready.Borrar_especifico(v);    
+     //lista_ready.deleteBegin();
+     //setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -336,13 +350,14 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
-         setLista_ready(lista_ready);
+         //setLista_ready(lista_ready);
      }
      Procesos e = Procesos.class.cast(g);
      nueva.addEnd(e);
-     lista_ready.Borrar_especifico(g);
-     setLista_ready(lista_ready);
-     setLista_ready(nueva);
+     lista_ready.Borrar_especifico(g);    
+     //setLista_ready(lista_ready);
+     setLista_ready2(nueva);
+      setLista_ready(lista_ready);
      for (int i=0; i < lista_ready.isSize(); i++){
          Object z = lista_ready.search(i);
          Procesos v = Procesos.class.cast(z);
@@ -351,6 +366,8 @@ int p = 1;
             v.setTiempo(p-5); 
          }
      }
+    }
+setNo_SRT(false);
        FCFS();
  }
  
@@ -385,9 +402,17 @@ int p = 1;
     }
      Object v = lista_ready.search(a);
      Procesos n = Procesos.class.cast(v);
-     nueva.addEnd(n);
-     lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
+     nueva.addEnd(n);     
+     if(lista_ready.getFirst().getNext()== null){
+             lista_ready.deleteBegin();
+         }else{
+              if(lista_ready.getLast().getNext()== null){
+                  lista_ready.deleteFinal();
+              }else{
+                          lista_ready.Borrar_especifico(v);    
+              }
+         }
+     //setLista_ready(lista_ready);
      d--;
      b++;
      z = z+5;
@@ -398,15 +423,23 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
-         setLista_ready(lista_ready);
+         //setLista_ready(lista_ready);
      }
      Procesos e = Procesos.class.cast(g);
      nueva.addEnd(e);
-     lista_ready.Borrar_especifico(g);
-     setLista_ready(lista_ready);
-     setLista_ready(nueva);
+     if(lista_ready.getFirst().getNext()== null){
+             lista_ready.deleteBegin();
+         }else{
+              if(lista_ready.getLast().getNext()== null){
+                  lista_ready.deleteFinal();
+              }else{
+                          lista_ready.Borrar_especifico(g);    
+              }
+         }
+     setLista_ready2(nueva);
+          setLista_ready(lista_ready);
   }
-  no_HRRN= false;
+setNo_HRRN(false);
   FCFS();
 
  }
@@ -414,6 +447,7 @@ int p = 1;
  
  //Sexta politica de planificacion, esta es por prioridades
  public void Feedback() throws InterruptedException{
+   if(no_Feedback){
   List nueva = new List();
    int b = 0;
    int c = numero_proceso*2;
@@ -437,8 +471,16 @@ int p = 1;
      Object v = lista_ready.search(a);
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
-     lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
+     if(lista_ready.getFirst().getNext()== null){
+             lista_ready.deleteBegin();
+         }else{
+              if(lista_ready.getLast().getNext()== null){
+                  lista_ready.deleteFinal();
+              }else{
+                          lista_ready.Borrar_especifico(v);    
+              }
+         }
+     //setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -448,13 +490,15 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
-         setLista_ready(lista_ready);
+         //setLista_ready(lista_ready);
      }
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
-     setLista_ready(lista_ready);
-     setLista_ready(nueva);
+     //setLista_ready(lista_ready);
+     setLista_ready2(nueva);
+   }
+   setNo_Feedback(false);
      FCFS();   
  }
  
@@ -463,28 +507,9 @@ int p = 1;
      //System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
-         //TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
-         System.out.println("esto es prueba "+ clock.plan);
-        switch (clock.plan) {
-            case 0:
-                System.out.println("No hay Round Robin");
-                FCFS();
-                //pero creo que FCFS es round robin
-            case 1:
-                SPN();
-            case 2:
-                SRT();
-            case 3:
-                HRRN();
-            case 4:
-                Feedback();
-            case 5:
-                FCFS();
-            }
+         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
         if (clock.statusFR){
             setLista_ready(lista_ready);
-            setLista_bloqueados(lista_bloqueados);
-            setLongTermList(lista_largo_plazo);
                 System.out.println("ciclo "+ciclos);
                   for (int i=0; i < lista_cpu.isSize(); i++){
                  //System.out.println("valode de i:"+i);
@@ -508,7 +533,6 @@ int p = 1;
                 while (a < numero_proceso_cpu){
                  Object g = d.getProcesos().search(a);
                  Procesos e = Procesos.class.cast(g);
-                    fman.PCB.setText(e.getAll());
                     String temp = e.get_Nombre();
                     sim.setProcess(i, temp, 1);
                     a++;
@@ -540,32 +564,59 @@ int p = 1;
  public void Verificar_Politica_Planificacion() throws InterruptedException{
      //System.out.println("no es aqui, es la bruja");
      int a  = 0;
+     setPlanifiacion_vigente(clock.planificador);
      if(a == Planifiacion_vigente){
+         System.out.println("esto es una prueba"+a);
+               setNo_HRRN(true);
+      setNo_SPN(true);
+      setNo_SRT(true);
+      setNo_Feedback(true);
         FCFS();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
+                  System.out.println("esto es una prueba 2 "+a);
+                        setNo_HRRN(true);
+      setNo_SPN(true);
+      setNo_SRT(true);
+      setNo_Feedback(true);
          Round_Robin();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
+                  System.out.println("esto es una prueba 3 "+a);
+                        setNo_HRRN(true);
+      setNo_SRT(true);
+      setNo_Feedback(true);
        SPN();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
+                  System.out.println("esto es una prueba 4 "+a);
+                        setNo_HRRN(true);
+      setNo_SPN(true);
+      setNo_Feedback(true);
         SRT();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
+                  System.out.println("esto es una prueba 5 "+a);
+      setNo_SPN(true);
+      setNo_SRT(true);
+      setNo_Feedback(true);
        HRRN();
      }else{
        a++;  
      }
      if(a == Planifiacion_vigente){
+                  System.out.println("esto es una prueba 6 "+a);
+                        setNo_HRRN(true);
+      setNo_SPN(true);
+      setNo_SRT(true);
         Feedback();
      }
  }
@@ -587,13 +638,15 @@ int p = 1;
       if(e.getCierre() != ciclos){
          if(e.comprobar_excepcion(ciclos)){
           lista_bloqueados.addEnd(e);
+          //setLista_bloqueados(lista_bloqueados);
           //setLista_ready(lista_bloqueados);
       }else{
       lista_ready.addEnd(e);
-      //setLista_ready(lista_ready);
+      setLista_ready(lista_ready);
       }
       }else{
          lista_largo_plazo.addEnd(e);
+         setLista_largo_plazo(lista_largo_plazo);
       }
       a++;
      }
@@ -605,6 +658,8 @@ int p = 1;
      }
      r++;
     }
+            setLista_bloqueados(lista_bloqueados);
+            setLista_largo_plazo(lista_largo_plazo);            
      //System.out.println("despues");
      //lista_ready.print();
    chequear_bloqueados(); 
@@ -613,20 +668,39 @@ int p = 1;
  //metodo que verifica cuales procesos pueden salir de la lista de bloqueados
  public void chequear_bloqueados() throws InterruptedException{
      //System.out.println("posicion 4"+lista_ready.isSize());
-     System.out.println("lista de bloqueados");
+     System.out.println("lista de bloqueados prueba"+lista_bloqueados.isSize());
      lista_bloqueados.print();
+     setLista_bloqueados(lista_bloqueados);
+     setLista_largo_plazo(lista_largo_plazo);
      if(lista_bloqueados.getFirst() != null){
+     Object e = lista_bloqueados.getFirst().getElement();
+     Procesos f = Procesos.class.cast(e);
+     if(f.get_satisface() == ciclos){
+         lista_ready.addEnd(f);
+         lista_bloqueados.deleteBegin();
+      }
+     }
      for (int i=0; i < lista_bloqueados.isSize(); i++){
+      setLista_bloqueados(lista_bloqueados);
      System.out.println(lista_bloqueados.isSize());
      Object c = lista_bloqueados.search(i);
      Procesos d = Procesos.class.cast(c);
      if(d.get_satisface() == ciclos){
          lista_ready.addEnd(d);
-         //setLista_ready(lista_ready);
+         if(lista_bloqueados.getFirst().getNext()== null){
+             lista_bloqueados.deleteBegin();
+         }else{
+              if(lista_bloqueados.getLast().getNext()== null){
+                  lista_bloqueados.deleteFinal();
+              }else{
+                          lista_bloqueados.Borrar_especifico(c);    
+              }
          }
-       }   
+         setLista_ready(lista_ready);
+         }   
      }
-     iniciar_nuevo_ciclo(); 
+      setLista_bloqueados(lista_bloqueados);
+     Verificar_Politica_Planificacion(); 
  }
  
  //excepcion que se usa para ordenar los procesos cuando se inician

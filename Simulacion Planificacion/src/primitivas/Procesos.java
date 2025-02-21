@@ -23,18 +23,10 @@ boolean ready = true;
 boolean bloqueado = false;
 boolean largo_plazo = false;
 String Nombre;
-int Estado_Pc = (int) Math.floor(Math.random()*50+10);
-int Estado_Mar = (int) Math.floor(Math.random()*50+10);
+String Estado_Pc = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
+String Estado_Mar = " ";//por favor, llenar correctamente esto, que no se que es pero lo piden
 Boolean Entrada_Salida = false;
 Boolean Cpu_bound = false;
-
-public String getAll(){
-    return ("ID: "+Id+System.lineSeparator()+"Exception: "+make_exception+System.lineSeparator()+"Satisface: "+satisface+
-            System.lineSeparator()+"Tiempo: "+tiempo+System.lineSeparator()+"Prioridad: "+prioridad+System.lineSeparator()+"Cierre: "+cierre
-            +System.lineSeparator()+"Ready?: "+ready+System.lineSeparator()+"Block?: "+bloqueado+System.lineSeparator()+"Listo?: "+largo_plazo+
-            System.lineSeparator()+"Nombre: "+Nombre+System.lineSeparator()+"PC: "+Estado_Pc+System.lineSeparator()+"Mar: "+Estado_Mar+
-            System.lineSeparator()+"I/O Bound: "+Entrada_Salida+System.lineSeparator()+"CPU Bound: "+ Cpu_bound);
-}
 
 public int get_Id (){
     return Id;
@@ -52,11 +44,11 @@ public String get_Nombre (){
     return Nombre;
 }
 
-public int get_Estado_Pc (){
+public String get_Estado_Pc (){
     return Estado_Pc;
 }
 
-public int get_Estado_Mar (){
+public String get_Estado_Mar (){
     return Estado_Mar;
 }
 
@@ -88,11 +80,11 @@ public void change_Nombre (String nombre){
      Nombre = nombre;
 }
 
-public void chnage_Estado_Pc (int id){
+public void chnage_Estado_Pc (String id){
      Estado_Pc = id;
 }
 
-public void change_Estado_Mar (int id){
+public void change_Estado_Mar (String id){
      Estado_Mar = id;
 }
 
