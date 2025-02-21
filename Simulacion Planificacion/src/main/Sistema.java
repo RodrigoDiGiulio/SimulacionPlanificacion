@@ -83,6 +83,8 @@ public class Sistema {
       proceso.change_Nombre(nombre);
       proceso.change_Entrada_Salida(true);
       proceso.cambiar_satisface(satisface);
+      int a = (int)Math.floor(Math.random()*10+1);
+      proceso.setCierre(satisface+a);
       proceso.cambiar_make_exception(excepcion);
       if(proceso.Validar_Nombre(nombre)){
         lista_ready.addEnd(proceso);
@@ -175,7 +177,7 @@ int p = 1;
      while (n < numero_proceso_cpu * numero_cpus){
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
-     lista_ready.deleteBegin();
+         lista_ready.deleteBegin();
      setLista_ready(lista_ready);
       n++;
      }
@@ -420,6 +422,7 @@ int p = 1;
  
  //metodo que comienza un nuevo ciclo
  public void iniciar_nuevo_ciclo() throws InterruptedException{
+     System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
         if (clock.statusFR){
@@ -464,6 +467,7 @@ int p = 1;
  
  //metodo que intenta parar los threads actuales (no funciona, actualmente no hace nada)
  public void Para_ciclo_actual () throws InterruptedException{
+     System.out.println("posicion 2"+lista_ready.isSize());
      for (int i=0; i < lista_cpu.isSize(); i++){
       //System.out.println("valode de i:"+i);
      Object c = lista_cpu.search(i);
@@ -516,6 +520,7 @@ int p = 1;
  public void vaciar(int numero_cpus, int r) throws InterruptedException{
      //System.out.println(" Primer antes");
      //lista_ready.print();
+     System.out.println("posicion 3"+lista_ready.isSize());
      for (int i=0; i < numero_cpus; i++){
      int a =0;
      int b = 0;
@@ -524,12 +529,14 @@ int p = 1;
      while (a < numero_proceso_cpu){
       Object g = d.getProcesos().search(a);
       Procesos e = Procesos.class.cast(g);
-      if(e.comprobar_excepcion(ciclos)){
+      if(e.getCierre() != ciclos){
+         if(e.comprobar_excepcion(ciclos)){
           lista_bloqueados.addEnd(e);
           //setLista_ready(lista_bloqueados);
       }else{
       lista_ready.addEnd(e);
       //setLista_ready(lista_ready);
+      }
       }
       a++;
      }
@@ -548,6 +555,7 @@ int p = 1;
  
  //metodo que verifica cuales procesos pueden salir de la lista de bloqueados
  public void chequear_bloqueados() throws InterruptedException{
+     System.out.println("posicion 4"+lista_ready.isSize());
      System.out.println("lista de bloqueados");
      lista_bloqueados.print();
      if(lista_bloqueados.getFirst() != null){

@@ -18,6 +18,7 @@ int make_exception = -1;
 int satisface = -1;
 int tiempo = (int)Math.floor(Math.random()*50+1);;
 int prioridad = (int)Math.floor(Math.random()*20+1);
+int cierre = (int)Math.floor(Math.random()*50+10);;
 boolean ready = true;
 boolean bloqueado = false;
 boolean largo_plazo = false;
@@ -121,8 +122,16 @@ public void change_largo_plazo (boolean id){
 
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
-    }   
- 
+    }
+
+    public int getCierre() {
+        return cierre;
+    }
+
+    public void setCierre(int cierre) {
+        this.cierre = cierre;
+    }
+    
 //metodo para validar que el nombre no es vacio
 public boolean  Validar_Nombre  (String nombre){
     if (nombre == null){

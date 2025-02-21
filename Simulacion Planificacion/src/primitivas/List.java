@@ -524,7 +524,7 @@ public class List<T>{
             setFirst(pointer.getNext());
             pointer.setNext(null);         
         }
-        
+        size--;
     }
        
           public void deleteFinal(){
