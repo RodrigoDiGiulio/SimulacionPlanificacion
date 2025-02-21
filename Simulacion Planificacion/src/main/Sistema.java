@@ -318,7 +318,7 @@ int p = 1;
  
  //quinta politica de planifcacion agarra los que tenga el mas
  //alto ratio de respuesta
- public void HRRN()throws InterruptedException{
+ public void HRRN() throws InterruptedException{
    if(no_HRRN){
    List nueva = new List();
    int b = 0;
@@ -572,7 +572,7 @@ int p = 1;
  }
  
  //excepcion que se usa para ordenar los procesos cuando se inician
- public void Excepcion() throws InterruptedException {
+ public void Excepcion() throws InterruptedException  {
   TimeUnit.MILLISECONDS.sleep(  100);   
  }
  
