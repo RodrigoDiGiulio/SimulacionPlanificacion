@@ -508,6 +508,7 @@ int p = 1;
                 while (a < numero_proceso_cpu){
                  Object g = d.getProcesos().search(a);
                  Procesos e = Procesos.class.cast(g);
+                    fman.PCB.setText(e.getAll());
                     String temp = e.get_Nombre();
                     sim.setProcess(i, temp, 1);
                     a++;

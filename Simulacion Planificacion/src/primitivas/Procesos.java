@@ -28,6 +28,14 @@ int Estado_Mar = (int) Math.floor(Math.random()*50+10);
 Boolean Entrada_Salida = false;
 Boolean Cpu_bound = false;
 
+public String getAll(){
+    return ("ID: "+Id+System.lineSeparator()+"Exception: "+make_exception+System.lineSeparator()+"Satisface: "+satisface+
+            System.lineSeparator()+"Tiempo: "+tiempo+System.lineSeparator()+"Prioridad: "+prioridad+System.lineSeparator()+"Cierre: "+cierre
+            +System.lineSeparator()+"Ready?: "+ready+System.lineSeparator()+"Block?: "+bloqueado+System.lineSeparator()+"Listo?: "+largo_plazo+
+            System.lineSeparator()+"Nombre: "+Nombre+System.lineSeparator()+"PC: "+Estado_Pc+System.lineSeparator()+"Mar: "+Estado_Mar+
+            System.lineSeparator()+"I/O Bound: "+Entrada_Salida+System.lineSeparator()+"CPU Bound: "+ Cpu_bound);
+}
+
 public int get_Id (){
     return Id;
 }
