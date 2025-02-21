@@ -423,6 +423,7 @@ int p = 1;
      boolean leave = false;
      while (!leave){ 
         if (clock.statusFR){
+            setLista_ready(lista_ready);
                 System.out.println("ciclo "+ciclos);
                   for (int i=0; i < lista_cpu.isSize(); i++){
                  //System.out.println("valode de i:"+i);
@@ -430,12 +431,20 @@ int p = 1;
                 Cpu d = Cpu.class.cast(c);
                  //System.out.println("cpu"+0);
                  //d.getProcesos().print();
+<<<<<<< HEAD
+                 //d.arrancar(numero_proceso_cpu);
+                 System.out.println("lista de los threads que estan en la cpu "+i);
+=======
                  d.arrancar(numero_proceso_cpu);
                       System.out.println("lista de los threads que estan en la cpu "+i);
+                        String temp = sim.getProcess(i, 1);
+                        sim.setProcess(i, temp, 1);
+>>>>>>> 98968da56e07bea3874ccd9f0a962813992e5a0e
                  d.getProcesos().print();
                  Excepcion();
                 }
              ciclos++;
+<<<<<<< HEAD
              for (int i=0; i < numero_cpus; i++){
                 int a =0;
                 int b = 0;
@@ -446,9 +455,12 @@ int p = 1;
                  Procesos e = Procesos.class.cast(g);
                     String temp = sim.getProcess(i, 1);
                     sim.setProcess(i, temp, 1);
+                    a++;
                 }}
+                         leave = true;
+=======
+>>>>>>> 98968da56e07bea3874ccd9f0a962813992e5a0e
             Para_ciclo_actual();
-            leave = true;
         }
         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
      }
@@ -472,6 +484,7 @@ int p = 1;
  
  //metodo que su titulo explica todo
  public void Verificar_Politica_Planificacion() throws InterruptedException{
+     System.out.println("no es aqui, es la bruja");
      int a  = 0;
      if(a == Planifiacion_vigente){
         FCFS();
@@ -518,10 +531,10 @@ int p = 1;
       Procesos e = Procesos.class.cast(g);
       if(e.comprobar_excepcion(ciclos)){
           lista_bloqueados.addEnd(e);
-          setLista_ready(lista_bloqueados);
+          //setLista_ready(lista_bloqueados);
       }else{
       lista_ready.addEnd(e);
-      setLista_ready(lista_ready);
+      //setLista_ready(lista_ready);
       }
       a++;
      }
@@ -544,11 +557,12 @@ int p = 1;
      lista_bloqueados.print();
      if(lista_bloqueados.getFirst() != null){
      for (int i=0; i < lista_bloqueados.isSize(); i++){
+     System.out.println(lista_bloqueados.isSize());
      Object c = lista_bloqueados.search(i);
      Procesos d = Procesos.class.cast(c);
      if(d.get_satisface() == ciclos){
          lista_ready.addEnd(d);
-         setLista_ready(lista_ready);
+         //setLista_ready(lista_ready);
          }
        }   
      }
