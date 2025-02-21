@@ -431,20 +431,17 @@ int p = 1;
                 Cpu d = Cpu.class.cast(c);
                  //System.out.println("cpu"+0);
                  //d.getProcesos().print();
-<<<<<<< HEAD
+
                  //d.arrancar(numero_proceso_cpu);
                  System.out.println("lista de los threads que estan en la cpu "+i);
-=======
                  d.arrancar(numero_proceso_cpu);
                       System.out.println("lista de los threads que estan en la cpu "+i);
                         String temp = sim.getProcess(i, 1);
                         sim.setProcess(i, temp, 1);
->>>>>>> 98968da56e07bea3874ccd9f0a962813992e5a0e
                  d.getProcesos().print();
                  Excepcion();
                 }
              ciclos++;
-<<<<<<< HEAD
              for (int i=0; i < numero_cpus; i++){
                 int a =0;
                 int b = 0;
@@ -458,8 +455,6 @@ int p = 1;
                     a++;
                 }}
                          leave = true;
-=======
->>>>>>> 98968da56e07bea3874ccd9f0a962813992e5a0e
             Para_ciclo_actual();
         }
         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
