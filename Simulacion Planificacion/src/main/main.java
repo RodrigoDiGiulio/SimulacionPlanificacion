@@ -29,8 +29,6 @@ public class main {
 
         Sistema pro = new Sistema();
         pro.iniciar();
-        Sistema lol = new Sistema();
-        lol.iniciar();
     }
 }
  

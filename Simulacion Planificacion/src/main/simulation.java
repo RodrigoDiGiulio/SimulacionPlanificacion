@@ -91,7 +91,7 @@ public class simulation {
         
         // Agregar todos los de largo plazo
         longTermSide.setLayout(new BoxLayout(longTermSide, BoxLayout.Y_AXIS));
-        JLabel largoPlazoLabel = new JLabel("Largo Plazo");
+        JLabel largoPlazoLabel = new JLabel("Terminados");
         largoPlazoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         longTermSide.add(largoPlazoLabel); 
         longTermJList = new JList();
