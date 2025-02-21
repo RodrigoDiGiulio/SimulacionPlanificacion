@@ -115,7 +115,6 @@ public class Sistema {
  proceso.change_Cpu_bound(true);
  if(proceso.Validar_Nombre(nombre)){
      lista_ready.addEnd(proceso); 
-     setLista_ready(lista_ready);
      }else{
           System.out.println("error: falta un nombre"); 
       }
@@ -177,6 +176,22 @@ int p = 1;
  //HRRN();
  //Feedback();
  //lista_cpu.print();
+        switch (clock.plan) {
+            case 0:
+                System.out.println("No hay Round Robin");
+                FCFS();
+                //pero creo que FCFS es round robin
+            case 1:
+                SPN();
+            case 2:
+                SRT();
+            case 3:
+                HRRN();
+            case 4:
+                Feedback();
+            case 5:
+                FCFS();
+            }
   }
 
 
@@ -201,10 +216,10 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
          lista_ready.deleteBegin();
-     setLista_ready(lista_ready);
+     //setLista_ready(lista_ready);
       n++;
      }
-   iniciar_nuevo_ciclo();
+    Para_ciclo_actual();
  }
 
  //metodo de planificacion round robin el segundo que nos piden, por las especificaciones
@@ -229,7 +244,7 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
           lista_ready.deleteBegin();
-          setLista_ready(lista_ready);
+          //setLista_ready(lista_ready);
       n++;
      }
    iniciar_nuevo_ciclo();    
@@ -448,10 +463,12 @@ int p = 1;
      //System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
-         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
+         //TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
+         System.out.println("esto es prueba "+ clock.plan);
         switch (clock.plan) {
             case 0:
                 System.out.println("No hay Round Robin");
+                FCFS();
                 //pero creo que FCFS es round robin
             case 1:
                 SPN();
@@ -608,7 +625,7 @@ int p = 1;
          }
        }   
      }
-     Verificar_Politica_Planificacion(); 
+     iniciar_nuevo_ciclo(); 
  }
  
  //excepcion que se usa para ordenar los procesos cuando se inician
