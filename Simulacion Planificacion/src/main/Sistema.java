@@ -423,7 +423,7 @@ int p = 1;
  
  //metodo que comienza un nuevo ciclo
  public void iniciar_nuevo_ciclo() throws InterruptedException{
-     System.out.println("posicion 1"+lista_ready.isSize());
+     //System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
          TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
@@ -481,7 +481,7 @@ int p = 1;
  
  //metodo que su titulo explica todo
  public void Verificar_Politica_Planificacion() throws InterruptedException{
-     System.out.println("no es aqui, es la bruja");
+     //System.out.println("no es aqui, es la bruja");
      int a  = 0;
      if(a == Planifiacion_vigente){
         FCFS();
@@ -518,7 +518,7 @@ int p = 1;
  public void vaciar(int numero_cpus, int r) throws InterruptedException{
      //System.out.println(" Primer antes");
      //lista_ready.print();
-     System.out.println("posicion 3"+lista_ready.isSize());
+     //System.out.println("posicion 3"+lista_ready.isSize());
      for (int i=0; i < numero_cpus; i++){
      int a =0;
      int b = 0;
@@ -555,7 +555,7 @@ int p = 1;
  
  //metodo que verifica cuales procesos pueden salir de la lista de bloqueados
  public void chequear_bloqueados() throws InterruptedException{
-     System.out.println("posicion 4"+lista_ready.isSize());
+     //System.out.println("posicion 4"+lista_ready.isSize());
      System.out.println("lista de bloqueados");
      lista_bloqueados.print();
      if(lista_bloqueados.getFirst() != null){
