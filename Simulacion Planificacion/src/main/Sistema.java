@@ -21,7 +21,7 @@ public class Sistema {
   int ciclos = 0;
   int numero_cpus;
   int numero_proceso = 0;
-  int numero_proceso_cpu = 2;
+  int numero_proceso_cpu = 1;
   int Planifiacion_vigente = 0;
   boolean no_SPN = true;
   boolean no_HRRN = true;
