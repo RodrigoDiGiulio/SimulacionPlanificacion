@@ -26,17 +26,11 @@ public class main {
         proceso.change_Nombre("hola");
         proceso.start();
         proceso.interrupt();
-<<<<<<< HEAD
-        Sistema lol = new Sistema();
-        lol.iniciar();
-
-=======
 
         Sistema pro = new Sistema();
         pro.iniciar();
         Sistema lol = new Sistema();
         lol.iniciar();
->>>>>>> 98968da56e07bea3874ccd9f0a962813992e5a0e
     }
 }
  
