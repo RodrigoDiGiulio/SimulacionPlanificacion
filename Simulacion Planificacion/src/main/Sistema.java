@@ -122,7 +122,7 @@ public void crear_cpus(int id){
 
 //metodo que arranca el sistema operativo
 public void iniciar() throws InterruptedException{
- setNumero_cpus(5);
+ setNumero_cpus(4);
  setNumero_proceso(15);
  sim = new simulation(numero_cpus);
  sim.showInterface();
@@ -425,6 +425,7 @@ int p = 1;
      System.out.println("posicion 1"+lista_ready.isSize());
      boolean leave = false;
      while (!leave){ 
+         TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
         if (clock.statusFR){
             setLista_ready(lista_ready);
                 System.out.println("ciclo "+ciclos);
@@ -438,9 +439,6 @@ int p = 1;
                  //d.arrancar(numero_proceso_cpu);
                  System.out.println("lista de los threads que estan en la cpu "+i);
                  d.arrancar(numero_proceso_cpu);
-                      System.out.println("lista de los threads que estan en la cpu "+i);
-                        String temp = sim.getProcess(i, 1);
-                        sim.setProcess(i, temp, 1);
                  d.getProcesos().print();
                  Excepcion();
                 }
@@ -453,14 +451,13 @@ int p = 1;
                 while (a < numero_proceso_cpu){
                  Object g = d.getProcesos().search(a);
                  Procesos e = Procesos.class.cast(g);
-                    String temp = sim.getProcess(i, 1);
+                    String temp = e.get_Nombre();
                     sim.setProcess(i, temp, 1);
                     a++;
                 }}
                          leave = true;
             Para_ciclo_actual();
         }
-        TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
      }
  }
  
