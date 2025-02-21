@@ -44,6 +44,7 @@ public class process {
     JButton search;
     Boolean searchFR;
     String fileNameGB;
+    JLabel PCB;
 
     public process() {
         procesosCargadosProcesos = new List();
@@ -86,7 +87,12 @@ public class process {
         ioExtra1.add(exceptionGeneration);
         ioExtra1.add(exceptionSatifaction);
         
-
+        //PCB
+        JPanel PCBPanel = new JPanel();
+        PCB = new JLabel();
+        PCB.setText("PCB");
+        PCBPanel.add(PCB);
+        
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.add(nombre);
         card.add(numInst);
@@ -94,6 +100,7 @@ public class process {
         card.add(ioBound);
         card.add(ioExtra0);
         card.add(ioExtra1);
+        card.add(PCBPanel);
         JButton add = new JButton("Agregar Proceso");
         add.addActionListener(new ActionListener() {
             @Override
