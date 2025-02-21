@@ -304,6 +304,9 @@ public class List<T>{
             while (i != pos){
 //                System.out.println("I");
 //                System.out.println(i);
+                if (aux.getNext() == null){
+                    break;
+                }
                 aux = aux.getNext();
                 i++;
             }

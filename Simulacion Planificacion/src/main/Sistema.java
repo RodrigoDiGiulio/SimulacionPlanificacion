@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+//NetBeans
 
 //clase principal que ordena y gestiona a las cpus y sus procesos
 package main;
@@ -13,6 +13,9 @@ import primitivas.CycleList;
 import primitivas.List;
 import primitivas.Stack;
 import primitivas.Cpu;
+import main.process;
+import main.simulation;
+import main.clock;
 
 public class Sistema {
   int ciclos = 0;
@@ -26,6 +29,9 @@ public class Sistema {
   List lista_ready = new List();
   List lista_bloqueados = new List();
   List lista_largo_plazo = new List();
+  simulation sim;
+  clock clock;
+  process fman;
 
     public void setNumero_cpus(int numero_cpus) {
         this.numero_cpus = numero_cpus;
@@ -49,10 +55,24 @@ public class Sistema {
 
     public void setLista_ready(List lista_ready) {
         this.lista_ready = lista_ready;
+        String[] temp = new String[lista_ready.isSize()];
+        for (int i = 0; i < lista_ready.isSize(); i++) {
+            Procesos tempP = (Procesos) lista_ready.searchPos(i);
+            temp[i] = tempP.get_Nombre();
+        }
+        sim.readyList = temp;
+        sim.updateReady();
     }
    
     public void setLista_bloqueados(List lista_bloqueados) {
         this.lista_bloqueados = lista_bloqueados;
+        String[] temp = new String[lista_bloqueados.isSize()];
+        for (int i = 0; i < lista_bloqueados.isSize(); i++) {
+            Procesos tempP = (Procesos) lista_bloqueados.searchPos(i);
+            temp[i] = tempP.get_Nombre();
+        }
+        sim.blockList = temp;
+        sim.updateBlock();
     }
   
     
@@ -65,7 +85,9 @@ public class Sistema {
       proceso.cambiar_satisface(satisface);
       proceso.cambiar_make_exception(excepcion);
       if(proceso.Validar_Nombre(nombre)){
-        lista_ready.addEnd(proceso);  
+        lista_ready.addEnd(proceso);
+        setLista_ready(lista_ready);
+        
       }else{
           System.out.println("error: falta un nombre"); 
       }
@@ -79,7 +101,8 @@ public class Sistema {
  proceso.change_Nombre(nombre);
  proceso.change_Cpu_bound(true);
  if(proceso.Validar_Nombre(nombre)){
-     lista_ready.addEnd(proceso);  
+     lista_ready.addEnd(proceso); 
+     setLista_ready(lista_ready);
      }else{
           System.out.println("error: falta un nombre"); 
       }
@@ -99,6 +122,12 @@ public void crear_cpus(int id){
 public void iniciar() throws InterruptedException{
  setNumero_cpus(5);
  setNumero_proceso(15);
+ sim = new simulation(numero_cpus);
+ sim.showInterface();
+ clock = new clock();
+ clock.showInterface();
+ fman = new process();
+ fman.showInterface();
 int l =0;
 int p = 1;
  for(int i=0; i < numero_cpus;i++){
@@ -117,11 +146,11 @@ int p = 1;
  setLista_ready(lista_ready);
     //System.out.println("primera lista de ready");
     //lista_ready.print();
- //FCFS();
+ FCFS();
  //SPN();
  //SRT();
  //HRRN();
- Feedback();
+ //Feedback();
  //lista_cpu.print();
   }
 
@@ -147,6 +176,7 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
      lista_ready.deleteBegin();
+     setLista_ready(lista_ready);
       n++;
      }
    iniciar_nuevo_ciclo();
@@ -174,6 +204,7 @@ int p = 1;
          //System.out.println("el valor de n es"+n);
          //lista_ready.print();
           lista_ready.deleteBegin();
+          setLista_ready(lista_ready);
       n++;
      }
    iniciar_nuevo_ciclo();    
@@ -206,6 +237,7 @@ int p = 1;
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -215,10 +247,12 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
+         setLista_ready(lista_ready);
      }
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      setLista_ready(nueva);
   }
   no_SPN= false;
@@ -252,6 +286,7 @@ int p = 1;
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -261,10 +296,12 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
+         setLista_ready(lista_ready);
      }
      Procesos e = Procesos.class.cast(g);
      nueva.addEnd(e);
      lista_ready.Borrar_especifico(g);
+     setLista_ready(lista_ready);
      setLista_ready(nueva);
      for (int i=0; i < lista_ready.isSize(); i++){
          Object z = lista_ready.search(i);
@@ -310,6 +347,7 @@ int p = 1;
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      d--;
      b++;
      z = z+5;
@@ -320,10 +358,12 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
+         setLista_ready(lista_ready);
      }
      Procesos e = Procesos.class.cast(g);
      nueva.addEnd(e);
      lista_ready.Borrar_especifico(g);
+     setLista_ready(lista_ready);
      setLista_ready(nueva);
   }
   no_HRRN= false;
@@ -358,6 +398,7 @@ int p = 1;
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      d--;
      b++;
    }
@@ -367,30 +408,50 @@ int p = 1;
          Procesos f = Procesos.class.cast(h);
          nueva.addEnd(f);
          lista_ready.deleteBegin();
+         setLista_ready(lista_ready);
      }
      Procesos n = Procesos.class.cast(v);
      nueva.addEnd(n);
      lista_ready.Borrar_especifico(v);
+     setLista_ready(lista_ready);
      setLista_ready(nueva);
      FCFS();   
  }
  
  //metodo que comienza un nuevo ciclo
  public void iniciar_nuevo_ciclo() throws InterruptedException{
-     System.out.println("ciclo "+ciclos);
-       for (int i=0; i < lista_cpu.isSize(); i++){
-      //System.out.println("valode de i:"+i);
-     Object c = lista_cpu.search(i);
-     Cpu d = Cpu.class.cast(c);
-      //System.out.println("cpu"+0);
-      //d.getProcesos().print();
-      d.arrancar(numero_proceso_cpu);
-           System.out.println("lista de los threads que estan en la cpu "+i);
-      d.getProcesos().print();
-      Excepcion();
+     boolean leave = false;
+     while (!leave){ 
+        if (clock.statusFR){
+                System.out.println("ciclo "+ciclos);
+                  for (int i=0; i < lista_cpu.isSize(); i++){
+                 //System.out.println("valode de i:"+i);
+                Object c = lista_cpu.search(i);
+                Cpu d = Cpu.class.cast(c);
+                 //System.out.println("cpu"+0);
+                 //d.getProcesos().print();
+                 d.arrancar(numero_proceso_cpu);
+                      System.out.println("lista de los threads que estan en la cpu "+i);
+                 d.getProcesos().print();
+                 Excepcion();
+                }
+             ciclos++;
+             for (int i=0; i < numero_cpus; i++){
+                int a =0;
+                int b = 0;
+                Object c = lista_cpu.search(i);
+                Cpu d = Cpu.class.cast(c);
+                while (a < numero_proceso_cpu){
+                 Object g = d.getProcesos().search(a);
+                 Procesos e = Procesos.class.cast(g);
+                    String temp = sim.getProcess(i, 1);
+                    sim.setProcess(i, temp, 1);
+                }}
+            Para_ciclo_actual();
+            leave = true;
+        }
+        TimeUnit.MILLISECONDS.sleep(clock.tiempo * 100);
      }
-  ciclos++;
- Para_ciclo_actual();
  }
  
  
@@ -457,8 +518,10 @@ int p = 1;
       Procesos e = Procesos.class.cast(g);
       if(e.comprobar_excepcion(ciclos)){
           lista_bloqueados.addEnd(e);
+          setLista_ready(lista_bloqueados);
       }else{
       lista_ready.addEnd(e);
+      setLista_ready(lista_ready);
       }
       a++;
      }
@@ -485,6 +548,7 @@ int p = 1;
      Procesos d = Procesos.class.cast(c);
      if(d.get_satisface() == ciclos){
          lista_ready.addEnd(d);
+         setLista_ready(lista_ready);
          }
        }   
      }

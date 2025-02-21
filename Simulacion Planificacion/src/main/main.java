@@ -21,13 +21,18 @@ public class main {
 
 
     public static void main(String[] args) throws InterruptedException{
-        //Procesos proceso = new Procesos();
-        //proceso.change_Nombre("hola");
-        //proceso.start();
-        //proceso.interrupt();
+        Procesos proceso = new Procesos();
+        proceso.change_Nombre("hola");
+        proceso.start();
+        proceso.interrupt();
 
+<<<<<<< HEAD
         Sistema proceso = new Sistema();
         proceso.iniciar();
+=======
+        Sistema lol = new Sistema();
+        lol.iniciar();
+>>>>>>> 21347b33db166dc91209f731dc35375cd4f08530
     }
 }
  

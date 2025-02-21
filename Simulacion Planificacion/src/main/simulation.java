@@ -276,6 +276,21 @@ public class simulation {
         readyJList.repaint();
     }
     
+    public void updateReady(){
+        readyJList.setListData(readyList);
+        readyJList.repaint();
+    }
+    
+    public void updateBlock(){
+        blockJList.setListData(blockList);
+        blockJList.repaint();
+    }
+    
+    public void updateLong(){
+        longTermJList.setListData(longTermList);
+        longTermJList.repaint();
+    }
+    
     public void showInterface() {
         frame.pack();
         frame.setVisible(true);
