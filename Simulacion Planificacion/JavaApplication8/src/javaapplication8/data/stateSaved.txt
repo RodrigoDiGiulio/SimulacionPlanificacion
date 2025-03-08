@@ -1,0 +1,30 @@
+Parcial 1|3|51,51,51|0,1,2|1|Matematica,Root,
+Parcial 2|5|51,51,102|3,4,5,6,7|1|Matematica,Root,
+Parcial 3|7|51,51,153|8,9,10,11,12,13,14|1|Matematica,Root,
+Pensamiento Libre|4|51,51,204|15,16,17,18|2|Talleres,Literatura,,Root,
+Ideologia Idealista|9|51,102,51|19,20,21,22,23,24,25,26,27|2|Talleres,Literatura,,Root,
+TanenBau|18|51,102,102|28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45|2|Libros,Literatura,,Root,
+Enciclopedia General|3|51,102,153|46,47,48|2|Libros,Literatura,,Root,
+Parcial 1|3|51,102,204|49,50,51|1|Literatura,Root,
+Parcial 2|6|51,153,51|52,53,54,55,56,57|1|Literatura,Root,
+Parcial 3|5|51,153,102|58,59,60,61,62|1|Literatura,Root,
+Log|
+MiscSystem started Correctly
+FileSystem started Correctly
+TableDisplay started Correctly
+BlockDisplay started Correctly
+FileDisplay started Correctly
+Folder Matematica Added
+File Parcial 1 Added
+File Parcial 2 Added
+File Parcial 3 Added
+Folder Literatura Added
+Folder Talleres Added
+Folder Libros Added
+File Pensamiento Libre Added
+File Ideologia Idealista Added
+File TanenBau Added
+File Enciclopedia General Added
+File Parcial 1 Added
+File Parcial 2 Added
+File Parcial 3 Added
